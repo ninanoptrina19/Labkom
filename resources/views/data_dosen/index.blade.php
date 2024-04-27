@@ -35,9 +35,6 @@
                         <td>{{ $dosen->telepon }}</td>
                         <td>
                         <a href="{{ url('/data_dosens/edit/' . $dosen->id) }}" class="btn btn-warning btn-sm">Edit</a>
-
-
-
                             <form action="{{ route('data_dosens.destroy', $dosen->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?')" style="display: inline-block;">
                                 @csrf
                                 @method('DELETE')

@@ -26,6 +26,8 @@ class DosenController extends Controller
             'nidn' => 'required|integer',
             'alamat' => 'required',
             'telepon' => 'required|integer',
+        ],[
+            'integer' => 'harus nomer'
         ]);
 
         DataDosen::create($validatedData);

@@ -4,6 +4,15 @@
 
 @section('content')
     <div class="container mt-4">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div><br />
+        @endif
         <h1>Tambah Data Dosen</h1>
 
         <form action="{{ route('data_dosens.store') }}" method="POST">
@@ -26,7 +35,7 @@
             </div>
             <div class="form-group">
                 <label for="telepon">Telepon:</label>
-                <input type="text" name="telepon" class="form-control" required>
+                <input type="number" name="telepon" class="form-control" required>
             </div>
             <button type="submit" class="btn btn-primary">Simpan</button>
         </form>

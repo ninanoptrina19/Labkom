@@ -87,8 +87,7 @@
           <div class="menu-inner-shadow"></div>
 
           <ul class="menu-inner py-1">
-          
-
+            
             @if (Auth::user()->roles == 'admin' || Auth::user()->roles == 'super admin')
             <li class="menu-item {{ request()->is('home') ? 'active' : '' }}">
               <a href="{{ url('/home') }}" class="menu-link">
@@ -108,6 +107,13 @@
                       <div data-i18n="Analytics">Laboratorium</div>
                     </a>
                   </li>
+                </li>
+                <li class="menu-item ">
+                  <a href="{{ url('/user') }}" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <div data-i18n="Analytics">Data User</div>
+                  </a>
+                </li>
             @endif
              <li class="menu-item ">
                <a href="index.html" class="menu-link">
@@ -121,12 +127,6 @@
                  <div data-i18n="Analytics">Hasil penjadwalan</div>
                </a>
              </li> 
-         
-               
-          
-            
-
-            
           </ul>
         </aside>
         <!-- / Menu -->
@@ -191,7 +191,7 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">John Doe</span>
+                            <span class="fw-semibold d-block">NINA NOPTRINA</span>
                             <small class="text-muted">Admin</small>
                           </div>
                         </div>

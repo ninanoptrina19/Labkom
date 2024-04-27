@@ -13,7 +13,7 @@
                 <input type="text" name="nama" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="kapasitas">Telepon:</label>
+                <label for="kapasitas">Kapasitas:</label>
                 <input type="string" name="kapasitas" class="form-control" required>
             </div>
             <button type="submit" class="btn btn-primary">Simpan</button>
