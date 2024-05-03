@@ -5,7 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\LaboratoriumController;
 use App\Http\Controllers\UserController;
-// use App\Http\Controllers\Jadwal;
+use App\Http\Controllers\JadwalController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,7 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+'Auth'::routes();
 
 
 
@@ -46,12 +46,12 @@ Route::get('/data_laboratorium/edit/{id}', [LaboratoriumController::class, 'edit
 Route::put('/data_laboratorium/update/{id}', [LaboratoriumController::class, 'update'])->name('data_laboratorium.update');
 Route::delete('/data_laboratorium/destroy/{id}', [LaboratoriumController::class, 'destroy'])->name('data_laboratorium.destroy');
 
-// Route::get('/jadwal', [JadwalController::class, 'index'])->name('data_jadwal.index');
-// Route::get('/data_jadwal/create', [JadwalController::class, 'create'])->name('data_jadwal.create');
-// Route::post('/data_jadwal', [JadwalController::class, 'store'])->name('data_jadwal.store');
-// Route::get('/data_jadwal/edit/{id}', [JadwalController::class, 'edit'])->name('data_jadwal.edit');
-// Route::put('/data_jadwal/update/{id}', [JadwalController::class, 'update'])->name('data_jadwal.update');
-// Route::delete('/data_jadwal/destroy/{id}', [JadwalController::class, 'destroy'])->name('data_jadwal.destroy');
+Route::get('/jadwal', [JadwalController::class, 'index'])->name('data_jadwal.index');
+Route::get('/data_jadwal/create', [JadwalController::class, 'create'])->name('data_jadwal.create');
+Route::post('/data_jadwal', [JadwalController::class, 'store'])->name('data_jadwal.store');
+Route::get('/data_jadwal/edit/{id}', [JadwalController::class, 'edit'])->name('data_jadwal.edit');
+Route::put('/data_jadwal/update/{id}', [JadwalController::class, 'update'])->name('data_jadwal.update');
+Route::delete('/data_jadwal/destroy/{id}', [JadwalController::class, 'destroy'])->name('data_jadwal.destroy');
 
 Route::get('/user', [UserController::class, 'index'])->name('data_user.index');
 Route::get('/data_user/create', [UserController::class, 'create'])->name('data_user.create');

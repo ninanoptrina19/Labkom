@@ -17,12 +17,12 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Nama</th>
                     <th scope="col">Dosen</th>
                     <th scope="col">Prodi</th>
                     <th scope="col">Mata Kuliah</th>
                     <th scope="col">Laboratorium</th>
-                    <th scope="col">Hari / Jam</th>
+                    <th scope="col">Hari</th>
+                    <th scope="col">Jam</th>
                     <th scope="col">Semester</th>
                     <th scope="col">Angkatan</th>
                     <th scope="col">Tanggal</th>
@@ -33,17 +33,17 @@
             <tbody>
                 @foreach ($jadwal as $jadwal)
                     <tr>
-                        <td>{{ $jadwal->nama }}</td>
-                        <td>{{ $jadwal->kapasitas }}</td>
+                        <td>{{ $jadwal->dosen->nama}}</td>
                         <td>{{ $jadwal->prodi }}</td>
-                        <td>{{ $jadwal->mata_kuliah }} ({{ $jadwal->sks }})</td>
-                        <td>{{ $jadwal->laboratorium }}</td>
-                        <td>{{ $jadwal->hari_jam }}</td>
+                        <td>{{ $jadwal->mata_kuliah }} </td>
+                        <td>{{ $jadwal->laboratorium->nama}}</td>
+                        <td>{{ $jadwal->hari }}</td>
+                        <td>{{ $jadwal->jam}}</td>
                         <td>{{ $jadwal->semester }}</td>
                         <td>{{ $jadwal->angkatan }}</td>
-                        <td>{{ date("d/m/Y", strtotime($jadwal->created_at)) }}</td>
-                        <td>{{ $jadwal-keterangan }}</td>
-
+                        <td>{{ date("d/m/Y", strtotime($jadwal->tanggal)) }}</td>
+                        <td>{{ $jadwal->keterangan }}</td>
+<td>
                         <a href="{{ route('data_jadwal.edit', $jadwal->id) }}" class="btn btn-warning btn-sm">Edit</a>
 
 

@@ -16,4 +16,5 @@ class DataLaboratorium extends Model
         'nama',
         'kapasitas',
     ];
+
 }
