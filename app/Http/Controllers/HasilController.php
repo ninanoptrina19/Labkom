@@ -12,7 +12,7 @@ class HasilController extends Controller
     public function index()
     {
         $hasil = DataHasil::all();
-        return view('hasil.index', compact('hasil'));
+        return view('data_hasil.index', compact('hasil'));
     }
 
     // public function create()
