@@ -6,11 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DataJadwal extends Model
+class DataHasil extends Model
 {
     use HasFactory;
 
-    protected $table = 'data_jadwal';
+    protected $table = 'data_hasil';
 
     protected $fillable = [
         'dosen_id',

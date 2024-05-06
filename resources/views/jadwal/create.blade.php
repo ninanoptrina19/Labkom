@@ -19,7 +19,7 @@
             @csrf
             <div class="form-group">
                 <label for="dosen">Dosen:</label>
-                <select name="dosen" class="form-control" required>
+                <select name="dosen_id" class="form-control" required>
                     <option value="">Pilih Dosen</option>
                     @foreach($dosens as $dosen)
                         <option value="{{ $dosen->id }}">{{ $dosen->nama }}</option>
@@ -39,7 +39,7 @@
 
 <div class="form-group">
     <label for="laboratorium">Laboratorium:</label>
-    <select name="laboratorium" class="form-control" required>
+    <select name="laboratorium_id" class="form-control" required>
         <option value="">Pilih Laboratorium</option>
         @foreach($laboratoriums as $laboratorium)
             <option value="{{ $laboratorium->id }}">{{ $laboratorium->nama }}</option>

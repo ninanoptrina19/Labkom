@@ -26,7 +26,11 @@
             @method('PUT')
             <div class="form-group">
                 <label for="dosen">Dosen:</label>
-                <input type="text" name="dosen" class="form-control" value="{{ $jadwal->dosen }}" required>
+                <select name="dosen_id" class="form-control" required>
+                    @foreach($dosens as $dosen)
+                        <option value="{{ $dosen->id }}" {{ $dosen->id == $jadwal->dosen_id ? 'selected' : '' }}>{{ $dosen->nama }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label for="prodi">Prodi:</label>
@@ -38,16 +42,35 @@
             </div>
             <div class="form-group">
                 <label for="laboratorium">Laboratorium:</label>
-                <input type="text" name="laboratorium" class="form-control" value="{{ $jadwal->laboratorium }}" required>
+                <select name="laboratorium_id" class="form-control" required>
+                    <option value="">Pilih Laboratorium</option>
+                    @foreach($laboratoriums as $laboratorium)
+                        <option value="{{ $laboratorium->id }}" {{ $laboratorium->id == $jadwal->laboratorium_id ? 'selected' : '' }}>{{ $laboratorium->nama }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label for="hari">Hari:</label>
-                <input type="text" name="hari" class="form-control" value="{{ $jadwal->hari}}" required>
+                <select name="hari" class="form-control" required>
+                    @foreach(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'] as $hari)
+                        <option value="{{ $hari }}" {{ $jadwal->hari == $hari ? 'selected' : '' }}>{{ $hari }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label for="jam">Jam:</label>
-                <input type="date" name="jam" class="form-control" value="{{ $jadwal->jam}}" required>
+                <select name="jam" class="form-control" required>
+                    @for ($i = 8; $i <= 16; $i++)
+                        @php
+                            $jamMulai = sprintf("%02d", $i);
+                            $jamSelesai = sprintf("%02d", $i + 1);
+                            $jamOption = $jamMulai . ':00-' . $jamSelesai . ':00';
+                        @endphp
+                        <option value="{{ $jamOption }}" {{ $jadwal->jam == $jamOption ? 'selected' : '' }}>{{ $jamMulai }}:00 - {{ $jamSelesai }}:00</option>
+                    @endfor
+                </select>
             </div>
+            
             <div class="form-group">
                 <label for="semester">Semester:</label>
                 <input type="text" name="semester" class="form-control" value="{{ $jadwal->semester }}" required>

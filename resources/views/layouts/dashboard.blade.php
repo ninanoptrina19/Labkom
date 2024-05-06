@@ -122,7 +122,7 @@
                </a>
              </li>
              <li class="menu-item ">
-               <a href="index.html" class="menu-link">
+              <a href="{{ url('/hasil') }}" class="menu-link">
                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
                  <div data-i18n="Analytics">Hasil penjadwalan</div>
                </a>

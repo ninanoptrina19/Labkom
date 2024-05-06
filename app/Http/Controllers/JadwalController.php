@@ -23,11 +23,12 @@ class JadwalController extends Controller
 
     public function store(Request $request)
     {
+       
         $validatedData = $request->validate([
-            'dosen' => 'required',
+            'dosen_id' => 'required',
             'prodi' => 'required',
             'mata_kuliah' => 'required',
-            'laboratorium' => 'required',
+            'laboratorium_id' => 'required',
             'hari' => 'required',
             'jam' => 'required',
             'semester'=>'required',
@@ -46,20 +47,21 @@ class JadwalController extends Controller
 
     public function edit($id)
     {
-        $dataJadwal = DataJadwal::find($id);
-
+        $jadwal = DataJadwal::find($id);
+        $dosens = DataDosen::all();
+        $laboratoriums = DataLaboratorium::all();
         
-        return view('data_jadwal.edit', compact('dataJadwal'));
+        return view('jadwal.edit', compact('jadwal','dosens','laboratoriums'));
     }
 
     public function update(Request $request, $id)
     {
         
         $validatedData = $request->validate([
-            'dosen' => 'required',
+            'dosen_id' => 'required',
             'prodi' => 'required',
             'mata_kuliah' => 'required',
-            'laboratorium' => 'required',
+            'laboratorium_id' => 'required',
             'hari' => 'required',
             'jam' => 'required',
             'semester'=>'required',

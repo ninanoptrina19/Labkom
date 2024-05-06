@@ -6,6 +6,7 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\LaboratoriumController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JadwalController;
+// use App\Http\Controllers\HasilController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,4 +60,11 @@ Route::post('/data_user', [UserController::class, 'store'])->name('data_user.sto
 Route::post('/data_user/edit/{id}', [UserController::class, 'edit'])->name('data_user.edit');
 Route::put('/data_user/update/{id}', [UserController::class, 'update'])->name('data_user.update');
 Route::delete('/data_user/destroy/{id}', [UserController::class, 'destroy'])->name('data_user.destroy');
+
+// Route::get('/hasil', [HasilController::class, 'index'])->name('data_hasil.index');
+// Route::post('/data_hasil', [HasilController::class, 'store'])->name('data_hasil.store');
+// Route::post('/data_hasil/edit/{id}', [HasilController::class, 'edit'])->name('data_hasil.edit');
+// Route::put('/data_hasil/update/{id}', [HasilController::class, 'update'])->name('data_hasil.update');
+// Route::delete('/data_hasil/destroy/{id}', [HasilController::class, 'destroy'])->name('data_hasil.destroy');
+
 
