@@ -25,6 +25,11 @@ class DataJadwal extends Model
         'keterangan',
     ];
 
+    public function hasil()
+    {
+        return $this->hasMany(DataHasil::class, 'jadwal_id');
+    }
+
     public function dosen()
     {
         return $this->belongsTo(DataDosen::class);

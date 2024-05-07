@@ -4,9 +4,20 @@
 
 @section('content')
     <div class="container mt-4">
-        <h1>Daftar Hasil Penghasilan</h1>
+        <h1>Daftar hasil</h1>
+        <a href="{{ route('hasil.pdf') }}" class="btn btn-primary">Cetak PDF</a>
 
-        <a class="btn btn-primary mb-3">Tambah hasil</a>
+        <form id="filterForm" action="{{ route('data_hasil.index') }}" method="GET">
+            <div class="mb-3">
+                <label for="angkatan" class="form-label">Filter berdasarkan angkatan:</label>
+                <select class="form-select" name="angkatan" id="angkatan">
+                    <option value="">Pilih Angkatan</option>
+                    @foreach ($angkatan as $item)
+                        <option value="{{ $item }}" @if(request('angkatan') == $item) selected @endif>{{ $item }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </form>
 
         @if(session('success'))
             <div class="alert alert-success" role="alert">
@@ -14,6 +25,9 @@
             </div>
         @endif
 
+       
+
+        @if (count($hasil) > 0)
         <table class="table">
             <thead>
                 <tr>
@@ -42,21 +56,20 @@
                         <td>{{ $hasil->semester }}</td>
                         <td>{{ $hasil->angkatan }}</td>
                         <td>{{ date("d/m/Y", strtotime($hasil->tanggal)) }}</td>
-                        <td>{{ $hasil->keterangan }}</td>
-<td>
-                        <a href="{{ route('data_hasil.edit', $hasil->id) }}" class="btn btn-warning btn-sm">Edit </a>
-
-
-
-                            <form action="{{ route('data_hasil.destroy', $hasil->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?')" style="display: inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                            </form>
-                        </td>
+                        <td>{{ $hasil->keterangan }}</td>  
                     </tr>
                 @endforeach
             </tbody>
         </table>
+    @else
+        <p>Tidak ada hasil penjadwalan yang ditemukan.</p>
+    @endif
     </div>
+
+    <script>
+        // Tambahkan event listener untuk select angkatan
+        document.getElementById('angkatan').addEventListener('change', function() {
+            document.getElementById('filterForm').submit(); // Kirim formulir saat pilihan angkatan berubah
+        });
+    </script>
 @endsection

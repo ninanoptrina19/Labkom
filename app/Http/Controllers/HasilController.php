@@ -6,54 +6,63 @@ use App\Models\DataJadwal;
 use App\Models\DataDosen;
 use App\Models\DataLaboratorium;
 use App\Models\DataHasil;
+use Dompdf\Dompdf;
+use Illuminate\Support\Facades\View;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class HasilController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $hasil = DataHasil::all();
-        return view('data_hasil.index', compact('hasil'));
+        $hasil = DataJadwal::all();
+        $angkatan = DataJadwal::select('angkatan')->distinct()->pluck('angkatan');
+    $hasil = DataJadwal::query();
+    if ($request->filled('angkatan')) {
+        $hasil->where('angkatan', $request->angkatan);
     }
 
-    // public function create()
-    // {
-    //     $dosens= DataDosen::all();
-    //     $laboratoriums= DataLaboratorium::all();
-    //     return view('jadwal.create', compact( 'dosens','laboratoriums')); 
-    // }
+    $hasil = $hasil->get();
+        return view('data_hasil.index', compact('hasil','angkatan'));
+    }
 
-    // public function store(Request $request)
-    // {
+    public function create()
+    {
+        $dosens= DataDosen::all();
+        $laboratoriums= DataLaboratorium::all();
+        return view('jadwal.create', compact( 'dosens','laboratoriums')); 
+    }
+
+    public function store(Request $request)
+    {
        
-    //     $validatedData = $request->validate([
-    //         'dosen_id' => 'required',
-    //         'prodi' => 'required',
-    //         'mata_kuliah' => 'required',
-    //         'laboratorium_id' => 'required',
-    //         'hari' => 'required',
-    //         'jam' => 'required',
-    //         'semester'=>'required',
-    //         'angkatan'=>'required',
-    //         'tanggal' => 'required',
-    //         'keterangan'=>'nullable',
+        $validatedData = $request->validate([
+            'dosen_id' => 'required',
+            'prodi' => 'required',
+            'mata_kuliah' => 'required',
+            'laboratorium_id' => 'required',
+            'hari' => 'required',
+            'jam' => 'required',
+            'semester'=>'required',
+            'angkatan'=>'required',
+            'tanggal' => 'required',
+            'keterangan'=>'nullable',
 
-    //     ],[
-    //         'integer' => 'harus diisi'
-    //     ]);
+        ],[
+            'integer' => 'harus diisi'
+        ]);
 
-    //     DataHasil::create($validatedData);
+        DataJadwal::create($validatedData);
 
-    //     return redirect()->route('data_hasil.index')->with('success', 'Data Hasil berhasil ditambahkan!');
-    // }
+        return redirect()->route('data_jadwal.index')->with('success', 'Data Jadwal berhasil ditambahkan!');
+    }
 
     public function edit($id)
     {
-        $hasil = DataHasil::find($id);
+        $jadwal = DataJadwal::find($id);
         $dosens = DataDosen::all();
-        // $jadwal = DataJadwal::all();
         $laboratoriums = DataLaboratorium::all();
         
-        return view('hasil.edit', compact('hasil','dosens','laboratoriums','jadwal'));
+        return view('jadwal.edit', compact('jadwal','dosens','laboratoriums'));
     }
 
     public function update(Request $request, $id)
@@ -73,22 +82,34 @@ class HasilController extends Controller
         ]);
 
         // Temukan data berdasarkan ID
-        $dataHasil = DataHasil::find($id);
+        $dataJadwal = DataJadwal::find($id);
         // Perbarui data dengan data yang validasi
-        $dataHasil->update($validatedData);
+        $dataJadwal->update($validatedData);
 
         // Redirect dengan pesan sukses
-        return redirect()->route('data_hasil.index')->with('success', 'Data Hasil Penjadwalan berhasil diperbarui!');
+        return redirect()->route('data_jadwal.index')->with('success', 'Data Jadwal berhasil diperbarui!');
     }
 
     public function destroy($id)
     {
 
-        $dataHasil = DataHasil::find($id);
-        $dataHasil->delete();
+        $dataJadwal = DataJadwal::find($id);
+        $dataJadwal->delete();
 
-        return redirect()->route('data_hasil.index')->with('success', 'Data hasil Penjadwalan berhasil dihapus!');
+        return redirect()->route('data_jadwal.index')->with('success', 'Data Jadwal berhasil dihapus!');
     }
+    public function cetakPDF()
+{
+    // $hasil = DataHasil::all();
+    
+    // $pdf = new DomPdf();
+    // $pdf->loadHtml(View::make('hasil_pdf', compact('hasil'))->render());
+    // $pdf->setPaper('A4', 'landscape');
+    // $pdf->render();
+    
+    // return $pdf->stream('hasil.pdf');
+    return 'belum bisa';
+}
 }
 
 
