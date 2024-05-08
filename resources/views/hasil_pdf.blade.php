@@ -41,9 +41,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($hasil as $index => $data)
+            @foreach ($hasil as $data)
                 <tr>
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $loop->iteration}}</td>
                     <td>{{ $data->dosen->nama }}</td>
                     <td>{{ $data->prodi }}</td>
                     <td>{{ $data->mata_kuliah }}</td>

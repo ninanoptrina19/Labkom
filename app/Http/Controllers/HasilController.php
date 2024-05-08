@@ -100,16 +100,13 @@ class HasilController extends Controller
     }
     public function cetakPDF()
 {
-    // $hasil = DataHasil::all();
+    $hasil = DataJadwal::with(['dosen', 'laboratorium'])->get();
+    $pdf = Pdf::loadView('hasil_pdf', ['hasil' => $hasil])->setPaper('a4', 'landscape');
     
-    // $pdf = new DomPdf();
-    // $pdf->loadHtml(View::make('hasil_pdf', compact('hasil'))->render());
-    // $pdf->setPaper('A4', 'landscape');
-    // $pdf->render();
-    
-    // return $pdf->stream('hasil.pdf');
-    return 'belum bisa';
+    return $pdf->download('hasil_penjadwalan.pdf');
 }
+
+    
 }
 
 

@@ -5,7 +5,7 @@
 @section('content')
     <div class="container mt-4">
         <h1>Daftar hasil</h1>
-        <a href="{{ route('hasil.pdf') }}" class="btn btn-primary">Cetak PDF</a>
+        <a href="{{ route('hasil.pdf') }}"  class="btn btn-primary">Cetak PDF</a>
 
         <form id="filterForm" action="{{ route('data_hasil.index') }}" method="GET">
             <div class="mb-3">
