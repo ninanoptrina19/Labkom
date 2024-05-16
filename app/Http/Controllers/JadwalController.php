@@ -5,14 +5,30 @@ use Illuminate\Http\Request;
 use App\Models\DataJadwal;
 use App\Models\DataDosen;
 use App\Models\DataLaboratorium;
+use Dompdf\Dompdf;
+use Illuminate\Support\Facades\View;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class JadwalController extends Controller
 {
-    public function index()
+
+    public function index(Request $request)
     {
         $jadwal = DataJadwal::all();
-        return view('jadwal.index', compact('jadwal'));
+        $angkatan = DataJadwal::select('angkatan')->distinct()->pluck('angkatan');
+    $jadwal = DataJadwal::query();
+    if ($request->filled('angkatan')) {
+        $jadwal->where('angkatan', $request->angkatan);
     }
+
+    $jadwal = $jadwal->get();
+        return view('jadwal.index', compact('jadwal','angkatan'));
+    }
+    // public function index()
+    // {
+    //     $jadwal = DataJadwal::all();
+    //     return view('jadwal.index', compact('jadwal'));
+    // }
 
     public function create()
     {
@@ -87,6 +103,13 @@ class JadwalController extends Controller
 
         return redirect()->route('data_jadwal.index')->with('success', 'Data Jadwal berhasil dihapus!');
     }
+    public function cetakPDF()
+{
+    $jadwal = DataJadwal::with(['dosen', 'laboratorium'])->get();
+    $pdf = Pdf::loadView('hasil_pdf', ['hasil' => $jadwal])->setPaper('a4', 'landscape');
+    
+    return $pdf->download('hasil_penjadwalan.pdf');
+}
 }
 
 

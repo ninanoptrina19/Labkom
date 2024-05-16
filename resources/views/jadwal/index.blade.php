@@ -8,12 +8,25 @@
 
         <a href="{{ route('data_jadwal.create') }}" class="btn btn-primary mb-3">Tambah jadwal</a>
 
+        <a href="{{ route('hasil.pdf') }}"  class="btn btn-primary float-end">Cetak PDF</a>
+
+        {{-- <form id="filterForm" action="{{ route('data_jadwal.index') }}" method="GET">
+            <div class="mb-3">
+                <label for="angkatan" class="form-label">Filter berdasarkan angkatan:</label>
+                <select class="form-select" name="angkatan" id="angkatan">
+                    <option value="">Pilih Angkatan</option>
+                    @foreach ($angkatan as $item)
+                        <option value="{{ $item }}" @if(request('angkatan') == $item) selected @endif>{{ $item }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </form> --}}
         @if(session('success'))
             <div class="alert alert-success" role="alert">
                 {{ session('success') }}
             </div>
         @endif
-
+        @if (count($jadwal) > 0)
         <table class="table">
             <thead>
                 <tr>
@@ -58,5 +71,14 @@
                 @endforeach
             </tbody>
         </table>
+        @else
+        <p>Tidak ada hasil penjadwalan yang ditemukan.</p>
+         @endif
     </div>
+    <script>
+        // Tambahkan event listener untuk select angkatan
+        document.getElementById('angkatan').addEventListener('change', function() {
+            document.getElementById('filterForm').submit(); // Kirim formulir saat pilihan angkatan berubah
+        });
+    </script>
 @endsection

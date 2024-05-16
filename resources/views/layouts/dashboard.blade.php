@@ -124,13 +124,13 @@
                  <div data-i18n="Analytics">Jadwal</div>
                </a>
              </li>
-             <li class="menu-item ">
+             {{-- <li class="menu-item ">
               <li class="menu-item {{ request()->is('hasil') ? 'active' : '' }}">
               <a href="{{ url('/hasil') }}" class="menu-link">
                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
                  <div data-i18n="Analytics">Hasil penjadwalan</div>
                </a>
-             </li> 
+             </li>  --}}
           </ul>
         </aside>
         <!-- / Menu -->
