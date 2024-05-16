@@ -14,15 +14,12 @@ class JadwalController extends Controller
 
     public function index(Request $request)
     {
-        $jadwal = DataJadwal::all();
-        $angkatan = DataJadwal::select('angkatan')->distinct()->pluck('angkatan');
-    $jadwal = DataJadwal::query();
-    if ($request->filled('angkatan')) {
-        $jadwal->where('angkatan', $request->angkatan);
-    }
-
-    $jadwal = $jadwal->get();
-        return view('jadwal.index', compact('jadwal','angkatan'));
+        if(auth()->user()->roles == 'admin'  ){
+            $jadwal = DataJadwal::all();
+        } else {
+            $jadwal = DataJadwal::where('dosen_id', auth()->user()->id)->get();
+        }
+        return view('jadwal.index', compact('jadwal'));
     }
     // public function index()
     // {
@@ -39,7 +36,7 @@ class JadwalController extends Controller
 
     public function store(Request $request)
     {
-       
+       dd($request);
         $validatedData = $request->validate([
             'dosen_id' => 'required',
             'prodi' => 'required',
@@ -55,6 +52,8 @@ class JadwalController extends Controller
         ],[
             'integer' => 'harus diisi'
         ]);
+
+        
 
         DataJadwal::create($validatedData);
 

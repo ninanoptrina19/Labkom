@@ -8,6 +8,7 @@ class DosenController extends Controller
 {
     public function index()
     {
+        
         $dosens = DataDosen::all();
         return view('data_dosen.index', compact('dosens'));
     }

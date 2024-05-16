@@ -19,12 +19,17 @@
             @csrf
             <div class="form-group">
                 <label for="dosen">Dosen:</label>
+                @if (Auth::user()->roles == 'admin')
                 <select name="dosen_id" class="form-control" required>
                     <option value="">Pilih Dosen</option>
                     @foreach($dosens as $dosen)
                         <option value="{{ $dosen->id }}">{{ $dosen->nama }}</option>
                     @endforeach
                 </select>
+                @else
+                <input type="text" name="" class="form-control" value="{{Auth::user()->name}}" id="" disabled>
+                <input type="hidden" name="dosen_id" value="{{Auth::user()->id}}" id="">
+                @endif
             </div>
             
             <div class="form-group">

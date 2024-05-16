@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\DataDosen;
+use App\Models\DataLaboratorium;
+use App\Models\DataJadwal;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $jadwal = DataJadwal::count();
+        $laboratorium = DataLaboratorium::count();
+        $dosenCount = DataDosen::count();
+        return view('home', compact ('dosenCount', 'laboratorium','jadwal'));
     }
 }

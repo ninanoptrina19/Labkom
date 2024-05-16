@@ -1,26 +1,60 @@
 @extends('layouts.dashboard')
 
 @section('content')
- <div class="row my-4">
-    <div class="col-md-12">
-    <div class="app-academy">
-  <div class="card p-0 mb-4">
-    <div class="card-body d-flex flex-column flex-md-row justify-content-between p-0 pt-4">
-      <div class="app-academy-md-25 card-body py-0">
-      </div>
-      <div class="app-academy-md-50 card-body d-flex align-items-md-center flex-column text-md-center">
-        <h3 class="card-title mb-4 lh-sm px-md-5 text-center">
-          Education, talents, and career opportunities.
-          <span class="text-primary fw-medium text-nowrap">All in one place</span>.
-        </h3>
-        <p class="mb-4">
-          Grow your skill with the most reliable online courses and certifications in marketing, information technology,
-          programming, and data science.
-        </p>
-      </div>
-    </div>
-  </div>
+ <div class="row my-4 px-3" style="gap: 10 px">
+  <div class="col-md-3  card mx-3 mb-3" >
+    <div class="d-flex align-items-end row">
+      <div class="col-8">
+        <div class="card-body">
+          <h6 class="card-title mb-1 text-nowrap">Data Dosen</h6>
+          <small class="d-block mb-3 text-nowrap">Yang terdaftar</small>
 
+          <h5 class="card-title text-primary mb-1">{{ $dosenCount }}</h5>
+          <small class="d-block mb-4 pb-1 text-muted">Dosen</small>
+
+          <a href="javascript:;" class="btn btn-sm btn-primary"> Data Dosen</a>
+        </div>
+      </div>
+      <div class="col-4 pt-3 ps-0">
+        <img src="{{asset ('/assets/img/illustrations/girl-doing-yoga-light.png')}} " width="100"  class="rounded-start" alt="View Sales">
+      </div>
     </div>
+  </div>  
+  <div class="card col-md-3 mx-3 mb-3 " style="gap: 10 px">
+    <div class="d-flex align-items-end row">
+      <div class="col-8">
+        <div class="card-body">
+          <h6 class="card-title mb-1 text-nowrap">Data Laboratorium</h6>
+          <small class="d-block mb-3 text-nowrap"> yang tersedia</small>
+
+          <h5 class="card-title text-primary mb-1">{{ $laboratorium }}</h5>
+          <small class="d-block mb-4 pb-1 text-muted">Laboratorium</small>
+
+          <a href="javascript:;" class="btn btn-sm btn-primary">Data Laboratorium</a>
+        </div>
+      </div>
+      <div class="col-4 pt-3 ps-0">
+        <img src="{{asset ('/assets/img/illustrations/girl-doing-yoga-light.png')}} " width="100"  class="rounded-start" alt="View Sales">
+      </div>
+    </div>
+  </div>  
+  <div class="card col-md-3 mx-3 mb-3" style="gap: 10 px">
+    <div class="d-flex align-items-end row">
+      <div class="col-8">
+        <div class="card-body">
+          <h6 class="card-title mb-1 text-nowrap">Data Jadwal</h6>
+          <small class="d-block mb-3 text-nowrap">yang telah dibuat</small>
+
+          <h5 class="card-title text-primary mb-1">{{$jadwal}}</h5>
+          <small class="d-block mb-4 pb-1 text-muted">Jadwal</small>
+
+          <a href="javascript:;" class="btn btn-sm btn-primary">Data Jadwal</a>
+        </div>
+      </div>
+      <div class="col-4 pt-3 ps-0">
+        <img src="{{asset ('/assets/img/illustrations/girl-doing-yoga-light.png')}} " width="100"  class="rounded-start" alt="View Sales">
+      </div>
+    </div>
+  </div>  
  </div>
 @endsection

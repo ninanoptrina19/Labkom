@@ -87,14 +87,13 @@
           <div class="menu-inner-shadow"></div>
 
           <ul class="menu-inner py-1">
-            
-            @if (Auth::user()->roles == 'admin' || Auth::user()->roles == 'super admin')
             <li class="menu-item {{ request()->is('home') ? 'active' : '' }}">
               <a href="{{ url('/home') }}" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
                   <div data-i18n="Analytics">Dashboard</div>
               </a>
           </li>
+            @if (Auth::user()->roles == 'admin' || Auth::user()->roles == 'super admin')
           <li class="menu-item {{ request()->is('dosen') ? 'active' : '' }}">
               <a href="{{ url('/dosen') }}" class="menu-link">
               <i class="menu-icon tf-icons bx bx-layout"></i>
@@ -217,22 +216,29 @@
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      {{-- <a class="dropdown-item" href="#">
                         <span class="d-flex align-items-center align-middle">
                           <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
                           <span class="flex-grow-1 align-middle">Billing</span>
                           <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
                         </span>
-                      </a>
+                      </a> --}}
                     </li>
                     <li>
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="auth-login-basic.html">
-                        <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle">Log Out</span>
-                      </a>
+
+                      <a class="dropdown-item" href="{{ route('logout') }}"
+                      onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                       {{ __('Logout') }}
+                   </a>
+
+                   <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                       @csrf
+                   </form>
+
                     </li>
                   </ul>
                 </li>

@@ -8,7 +8,9 @@
 
         <a href="{{ route('data_jadwal.create') }}" class="btn btn-primary mb-3">Tambah jadwal</a>
 
+        @if (Auth::user()->roles == 'admin')
         <a href="{{ route('hasil.pdf') }}"  class="btn btn-primary float-end">Cetak PDF</a>
+        @endif
 
         {{-- <form id="filterForm" action="{{ route('data_jadwal.index') }}" method="GET">
             <div class="mb-3">

@@ -64,10 +64,10 @@ Route::delete('/data_user/destroy/{id}', [UserController::class, 'destroy'])->na
 Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal_hasil.index');
 Route::get('/jadwal/cetak-pdf', [JadwalController::class, 'cetakPDF'])->name('hasil.pdf');
 
-Route::middleware(['auth', 'role:dosen'])->group(function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     
-});
+
 // Route::post('/data_hasil', [HasilController::class, 'store'])->name('data_hasil.store');
 // Route::post('/data_hasil/edit/{id}', [HasilController::class, 'edit'])->name('data_hasil.edit');
 // Route::put('/data_hasil/update/{id}', [HasilController::class, 'update'])->name('data_hasil.update');
