@@ -61,7 +61,6 @@ Route::post('/data_user/edit/{id}', [UserController::class, 'edit'])->name('data
 Route::put('/data_user/update/{id}', [UserController::class, 'update'])->name('data_user.update');
 Route::delete('/data_user/destroy/{id}', [UserController::class, 'destroy'])->name('data_user.destroy');
 
-Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal_hasil.index');
 Route::get('/jadwal/cetak-pdf', [JadwalController::class, 'cetakPDF'])->name('hasil.pdf');
 
 

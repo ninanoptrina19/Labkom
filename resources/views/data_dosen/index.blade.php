@@ -21,6 +21,7 @@
                     <th scope="col">Nama</th>
                     <th scope="col">NIDN</th>
                     <th scope="col">Alamat</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Telepon</th>
                     <th scope="col">Aksi</th>
                 </tr>
@@ -32,6 +33,7 @@
                         <td>{{ $dosen->nama }}</td>
                         <td>{{ $dosen->nidn }}</td>
                         <td>{{ $dosen->alamat }}</td>
+                        <td>{{ $dosen->user->email }}</td>
                         <td>{{ $dosen->telepon }}</td>
                         <td>
                         <a href="{{ url('/data_dosens/edit/' . $dosen->id) }}" class="btn btn-warning btn-sm">Edit</a>

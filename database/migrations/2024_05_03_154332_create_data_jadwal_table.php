@@ -19,15 +19,16 @@ return new class extends Migration
             $table->unsignedBigInteger('laboratorium_id');
             $table->string('hari');
             $table->integer('jam');
-            $table->string('semester');
+            $table->string('tahun_akademik'); // Menambahkan kolom tahun akademik
+            $table->enum('semester', ['GANJIL', 'GENAP']); // Mengubah kolom semester menjadi enum
             $table->string('angkatan');
-            $table->date('tanggal');
-            $table->string('keterangan');
+            $table->string('keterangan')->nullable(); // Menambahkan nullable agar tidak wajib diisi
             $table->timestamps();
             $table->foreign('laboratorium_id')->references('id')->on('data_laboratorium')->onDelete('cascade');
             $table->foreign('dosen_id')->references('id')->on('data_dosen')->onDelete('cascade');
         });
     }
+    
 
     /**
      * Reverse the migrations.

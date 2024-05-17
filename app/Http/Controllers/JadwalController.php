@@ -15,9 +15,10 @@ class JadwalController extends Controller
     public function index(Request $request)
     {
         if(auth()->user()->roles == 'admin'  ){
+            
             $jadwal = DataJadwal::all();
         } else {
-            $jadwal = DataJadwal::where('dosen_id', auth()->user()->id)->get();
+            $jadwal = DataJadwal::where('dosen_id', auth()->user()->dosen->id)->get();
         }
         return view('jadwal.index', compact('jadwal'));
     }
@@ -35,30 +36,29 @@ class JadwalController extends Controller
     }
 
     public function store(Request $request)
-    {
-       dd($request);
-        $validatedData = $request->validate([
-            'dosen_id' => 'required',
-            'prodi' => 'required',
-            'mata_kuliah' => 'required',
-            'laboratorium_id' => 'required',
-            'hari' => 'required',
-            'jam' => 'required',
-            'semester'=>'required',
-            'angkatan'=>'required',
-            'tanggal' => 'required',
-            'keterangan'=>'nullable',
+{
+    
+    $validatedData = $request->validate([
+        'dosen_id' => 'required',
+        'prodi' => 'required',
+        'mata_kuliah' => 'required',
+        'laboratorium_id' => 'required',
+        'hari' => 'required',
+        'jam' => 'required',
+        'semester' => 'required', // Menambahkan validasi untuk semester
+        'angkatan' => 'required',
+        'keterangan' => 'nullable',
+        'tahun_akademik' => 'required',
+    ], [
+        'integer' => 'harus diisi'
+    ]);
 
-        ],[
-            'integer' => 'harus diisi'
-        ]);
 
-        
+    DataJadwal::create($validatedData);
 
-        DataJadwal::create($validatedData);
+    return redirect()->route('data_jadwal.index')->with('success', 'Data Jadwal berhasil ditambahkan!');
+}
 
-        return redirect()->route('data_jadwal.index')->with('success', 'Data Jadwal berhasil ditambahkan!');
-    }
 
     public function edit($id)
     {
@@ -81,8 +81,9 @@ class JadwalController extends Controller
             'jam' => 'required',
             'semester'=>'required',
             'angkatan'=>'required',
-            'tanggal' => 'required',
             'keterangan'=>'nullable',
+            
+        'tahun_akademik' => 'required',
         ]);
 
         // Temukan data berdasarkan ID

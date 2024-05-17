@@ -70,18 +70,21 @@
                     @endfor
                 </select>
             </div>
-            
+            <div class="form-group">
+                <label for="tahun_akademik">Tahun Akademik:</label>
+                <input type="text" name="tahun_akademik" class="form-control" value="{{$jadwal->tahun_akademik}}" required>
+            </div>
             <div class="form-group">
                 <label for="semester">Semester:</label>
-                <input type="text" name="semester" class="form-control" value="{{ $jadwal->semester }}" required>
+                <select name="semester" class="form-control" required>
+                    <option value="">Pilih Semester</option>
+                    <option value="Ganjil">Ganjil</option>
+                    <option value="Genap">Genap</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="angkatan">Angkatan:</label>
                 <input type="text" name="angkatan" class="form-control" value="{{ $jadwal->angkatan }}" required>
-            </div>
-            <div class="form-group">
-                <label for="tanggal">Tanggal:</label>
-                <input type="date" name="tanggal" class="form-control" value="{{ $jadwal->tanggal }}" required>
             </div>
             <div class="form-group">
                 <label for="keterangan">Keterangan:</label>

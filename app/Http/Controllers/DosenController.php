@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
 use App\Models\DataDosen;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class DosenController extends Controller
 {
@@ -26,42 +28,72 @@ class DosenController extends Controller
             'nidn' => 'required|integer',
             'alamat' => 'required',
             'telepon' => 'required|integer',
-        ],[
-            'integer' => 'harus nomer'
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
         ]);
 
-        DataDosen::create($validatedData);
+        // Buat user baru
+        $user = User::create([
+            'name' => $validatedData['nama'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+            'roles' => 'dosen',
+        ]);
+
+        // Buat data dosen baru
+        DataDosen::create([
+            'user_id' => $user->id,
+            'kode' => $validatedData['kode'],
+            'nama' => $validatedData['nama'],
+            'nidn' => $validatedData['nidn'],
+            'alamat' => $validatedData['alamat'],
+            'telepon' => $validatedData['telepon'],
+        ]);
 
         return redirect()->route('data_dosens.index')->with('success', 'Data Dosen berhasil ditambahkan!');
     }
 
     public function edit($id)
     {
-        $dataDosen = DataDosen::find($id);
-
-        
-        return view('data_dosen.edit', compact('dataDosen'));
+        $dosen = DataDosen::findOrFail($id);
+        return view('data_dosen.edit', compact('dosen'));
     }
 
     public function update(Request $request, $id)
     {
-        
+
+        $dosen = DataDosen::findOrFail($id);
+        $user = User::findOrFail($dosen->user_id);
         $validatedData = $request->validate([
-            'kode' => 'required|',
+            'kode' => 'required|unique:data_dosen,kode,' . $id,
             'nama' => 'required',
             'nidn' => 'required|integer',
             'alamat' => 'required',
             'telepon' => 'required|integer',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:6',
         ]);
 
-        // Temukan data berdasarkan ID
-        $dataDosen = DataDosen::find($id);
-    
+        // Temukan data dosen berdasarkan ID
+        $dosen = DataDosen::findOrFail($id);
+        $user = User::findOrFail($dosen->user_id);
 
-        // Perbarui data dengan data yang validasi
-        $dataDosen->update($validatedData);
+        // Perbarui data user
+        $user->update([
+            'name' => $validatedData['nama'],
+            'email' => $validatedData['email'],
+            'password' => $request->password ? Hash::make($validatedData['password']) : $user->password,
+        ]);
 
-        // Redirect dengan pesan sukses
+        // Perbarui data dosen
+        $dosen->update([
+            'kode' => $validatedData['kode'],
+            'nama' => $validatedData['nama'],
+            'nidn' => $validatedData['nidn'],
+            'alamat' => $validatedData['alamat'],
+            'telepon' => $validatedData['telepon'],
+        ]);
+
         return redirect()->route('data_dosens.index')->with('success', 'Data Dosen berhasil diperbarui!');
     }
 
