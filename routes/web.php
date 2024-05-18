@@ -19,7 +19,7 @@ use App\Http\Controllers\HasilController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('Auth.login');
 });
 
 'Auth'::routes();
@@ -57,7 +57,7 @@ Route::delete('/data_jadwal/destroy/{id}', [JadwalController::class, 'destroy'])
 Route::get('/user', [UserController::class, 'index'])->name('data_user.index');
 Route::get('/data_user/create', [UserController::class, 'create'])->name('data_user.create');
 Route::post('/data_user', [UserController::class, 'store'])->name('data_user.store');
-Route::post('/data_user/edit/{id}', [UserController::class, 'edit'])->name('data_user.edit');
+Route::get('/data_user/edit/{id}', [UserController::class, 'edit'])->name('data_user.edit');
 Route::put('/data_user/update/{id}', [UserController::class, 'update'])->name('data_user.update');
 Route::delete('/data_user/destroy/{id}', [UserController::class, 'destroy'])->name('data_user.destroy');
 
