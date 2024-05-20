@@ -14,14 +14,34 @@ class JadwalController extends Controller
 
     public function index(Request $request)
     {
-        if(auth()->user()->roles == 'admin'  ){
-            
-            $jadwal = DataJadwal::all();
+        $tahunAkademikFilter = $request->input('tahun_akademik');
+        $semesterFilter = $request->input('semester');
+    
+        if (auth()->user()->roles == 'admin') {
+            $jadwalQuery = DataJadwal::query();
+            if ($tahunAkademikFilter) {
+                $jadwalQuery->where('tahun_akademik', $tahunAkademikFilter);
+            }
+            if ($semesterFilter) {
+                $jadwalQuery->where('semester', $semesterFilter);
+            }
+            $jadwal = $jadwalQuery->get();
         } else {
-            $jadwal = DataJadwal::where('dosen_id', auth()->user()->dosen->id)->get();
+            $jadwalQuery = DataJadwal::where('dosen_id', auth()->user()->dosen->id);
+            if ($tahunAkademikFilter) {
+                $jadwalQuery->where('tahun_akademik', $tahunAkademikFilter);
+            }
+            if ($semesterFilter) {
+                $jadwalQuery->where('semester', $semesterFilter);
+            }
+            $jadwal = $jadwalQuery->get();
         }
-        return view('jadwal.index', compact('jadwal'));
+    
+        $tahun_akademik = DataJadwal::select('tahun_akademik')->distinct()->pluck('tahun_akademik');
+    
+        return view('jadwal.index', compact('jadwal', 'tahun_akademik'));
     }
+    
     // public function index()
     // {
     //     $jadwal = DataJadwal::all();
@@ -103,13 +123,24 @@ class JadwalController extends Controller
 
         return redirect()->route('data_jadwal.index')->with('success', 'Data Jadwal berhasil dihapus!');
     }
-    public function cetakPDF()
+    public function cetakPDF(Request $request)
 {
-    $jadwal = DataJadwal::with(['dosen', 'laboratorium'])->get();
+    $query = DataJadwal::with(['dosen', 'laboratorium']);
+
+    if ($request->filled('tahun_akademik')) {
+        $query->where('tahun_akademik', $request->tahun_akademik);
+    }
+
+    if ($request->filled('semester')) {
+        $query->where('semester', $request->semester);
+    }
+
+    $jadwal = $query->get();
     $pdf = Pdf::loadView('hasil_pdf', ['hasil' => $jadwal])->setPaper('a4', 'landscape');
-    
+
     return $pdf->download('hasil_penjadwalan.pdf');
 }
+
 }
 
 

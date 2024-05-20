@@ -36,7 +36,7 @@
                 <th>Jam</th>
                 <th>Semester</th>
                 <th>Angkatan</th>
-                <th>Tanggal</th>
+                <th>Tahun Akademik</th>
                 <th>Keterangan</th>
             </tr>
         </thead>
@@ -52,7 +52,7 @@
                     <td>{{ $data->jam }}</td>
                     <td>{{ $data->semester }}</td>
                     <td>{{ $data->angkatan }}</td>
-                    <td>{{ $data->tanggal }}</td>
+                    <td>{{ $data->tahun_akademik }}</td>
                     <td>{{ $data->keterangan }}</td>
                 </tr>
             @endforeach

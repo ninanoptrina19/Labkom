@@ -1,5 +1,3 @@
-<!-- resources/views/data_dosens/index.blade.php -->
-
 @extends('layouts.dashboard')
 
 @section('content')
@@ -9,25 +7,41 @@
         <a href="{{ route('data_jadwal.create') }}" class="btn btn-primary mb-3">Tambah jadwal</a>
 
         @if (Auth::user()->roles == 'admin')
-        <a href="{{ route('hasil.pdf') }}"  class="btn btn-primary float-end">Cetak PDF</a>
+        <a href="{{ route('hasil.pdf', ['tahun_akademik' => request('tahun_akademik'), 'semester' => request('semester')]) }}" class="btn btn-primary float-end">Cetak PDF</a>
         @endif
-
-        {{-- <form id="filterForm" action="{{ route('data_jadwal.index') }}" method="GET">
-            <div class="mb-3">
-                <label for="tahun_akademik" class="form-label">Filter berdasarkan tahun akademik:</label>
-                <select class="form-select" name="tahun_akademik" id="tahun_akademik">
-                    <option value="">Pilih Tahun Akademik</option>
-                    @foreach ($tahun_akademik as $item)
-                        <option value="{{ $item }}" @if(request('angkatan') == $item) selected @endif>{{ $item }}</option>
-                    @endforeach
-                </select>
+        
+        <form id="filterForm" action="{{ route('data_jadwal.index') }}" method="GET">
+            <div class="row d-flex">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="tahun_akademik" class="form-label">Filter berdasarkan Tahun Akademik:</label>
+                        <select class="form-select" name="tahun_akademik" id="tahun_akademik" onchange="this.form.submit()">
+                            <option value="">Pilih Tahun Akademik</option>
+                            @foreach ($tahun_akademik as $item)
+                                <option value="{{ $item }}" @if(request('tahun_akademik') == $item) selected @endif>{{ $item }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="semester" class="form-label">Filter berdasarkan Semester:</label>
+                        <select class="form-select" name="semester" id="semester" onchange="this.form.submit()">
+                            <option value="">Pilih Semester</option>
+                            <option value="genap" @if(request('semester') == 'genap') selected @endif>Genap</option>
+                            <option value="ganjil" @if(request('semester') == 'ganjil') selected @endif>Ganjil</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-        </form> --}}
+        </form>
+        
         @if(session('success'))
             <div class="alert alert-success" role="alert">
                 {{ session('success') }}
             </div>
         @endif
+
         @if (count($jadwal) > 0)
         <table class="table">
             <thead>
@@ -63,9 +77,6 @@
 @if (Auth::user()->roles == 'admin')
 <td>
     <a href="{{ route('data_jadwal.edit', $jadwal->id) }}" class="btn btn-warning btn-sm">Edit</a>
-
-
-
         <form action="{{ route('data_jadwal.destroy', $jadwal->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?')" style="display: inline-block;">
             @csrf
             @method('DELETE')
@@ -81,10 +92,4 @@
         <p>Tidak ada hasil penjadwalan yang ditemukan.</p>
          @endif
     </div>
-    <script>
-        // Tambahkan event listener untuk select angkatan
-        document.getElementById('tahun_akademik').addEventListener('change', function() {
-            document.getElementById('filterForm').submit(); // Kirim formulir saat pilihan angkatan berubah
-        });
-    </script>
 @endsection

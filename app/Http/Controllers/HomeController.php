@@ -25,9 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $jadwal = DataJadwal::count();
+        $jadwalCount = DataJadwal::count();
+        $jadwal = DataJadwal::all();
         $laboratorium = DataLaboratorium::count();
         $dosenCount = DataDosen::count();
-        return view('home', compact ('dosenCount', 'laboratorium','jadwal'));
+        return view('home', compact ('dosenCount', 'laboratorium','jadwal','jadwalCount'));
     }
 }
