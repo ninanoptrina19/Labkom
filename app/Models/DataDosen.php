@@ -14,7 +14,6 @@ class DataDosen extends Model
 
     protected $fillable = [
         'user_id',
-        'kode',
         'nama',
         'nidn',
         'alamat',

@@ -22,12 +22,12 @@ class DosenController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         $validatedData = $request->validate([
-            'kode' => 'required|unique:data_dosen',
             'nama' => 'required',
-            'nidn' => 'required|integer',
+            'nidn' => 'required',
             'alamat' => 'required',
-            'telepon' => 'required|integer',
+            'telepon' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
         ]);
@@ -43,7 +43,6 @@ class DosenController extends Controller
         // Buat data dosen baru
         DataDosen::create([
             'user_id' => $user->id,
-            'kode' => $validatedData['kode'],
             'nama' => $validatedData['nama'],
             'nidn' => $validatedData['nidn'],
             'alamat' => $validatedData['alamat'],
@@ -65,7 +64,6 @@ class DosenController extends Controller
         $dosen = DataDosen::findOrFail($id);
         $user = User::findOrFail($dosen->user_id);
         $validatedData = $request->validate([
-            'kode' => 'required|unique:data_dosen,kode,' . $id,
             'nama' => 'required',
             'nidn' => 'required|integer',
             'alamat' => 'required',
@@ -87,7 +85,6 @@ class DosenController extends Controller
 
         // Perbarui data dosen
         $dosen->update([
-            'kode' => $validatedData['kode'],
             'nama' => $validatedData['nama'],
             'nidn' => $validatedData['nidn'],
             'alamat' => $validatedData['alamat'],

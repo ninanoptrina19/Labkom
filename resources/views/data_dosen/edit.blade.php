@@ -19,16 +19,12 @@
             @csrf
             @method('PUT')
             <div class="form-group">
-                <label for="kode">Kode:</label>
-                <input type="text" name="kode" class="form-control" value="{{ $dosen->kode }}" required>
-            </div>
-            <div class="form-group">
                 <label for="nama">Nama:</label>
                 <input type="text" name="nama" class="form-control" value="{{ $dosen->nama }}" required>
             </div>
             <div class="form-group">
                 <label for="nidn">NIDN:</label>
-                <input type="number" name="nidn" class="form-control" value="{{ $dosen->nidn }}" required>
+                <input type="text" name="nidn" class="form-control" value="{{ $dosen->nidn }}" required>
             </div>
             <div class="form-group">
                 <label for="alamat">Alamat:</label>
@@ -36,7 +32,7 @@
             </div>
             <div class="form-group">
                 <label for="telepon">Telepon:</label>
-                <input type="number" name="telepon" class="form-control" value="{{ $dosen->telepon }}" required>
+                <input type="text" name="telepon" class="form-control" value="{{ $dosen->telepon }}" required>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>

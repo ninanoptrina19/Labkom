@@ -52,7 +52,7 @@
             <div class="form-group">
                 <label for="hari">Hari:</label>
                 <select name="hari" class="form-control" required>
-                    @foreach(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'] as $hari)
+                    @foreach(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat','Sabtu'] as $hari)
                         <option value="{{ $hari }}" {{ $jadwal->hari == $hari ? 'selected' : '' }}>{{ $hari }}</option>
                     @endforeach
                 </select>
@@ -60,14 +60,13 @@
             <div class="form-group">
                 <label for="jam">Jam:</label>
                 <select name="jam" class="form-control" required>
-                    @for ($i = 8; $i <= 16; $i++)
-                        @php
-                            $jamMulai = sprintf("%02d", $i);
-                            $jamSelesai = sprintf("%02d", $i + 1);
-                            $jamOption = $jamMulai . ':00-' . $jamSelesai . ':00';
-                        @endphp
-                        <option value="{{ $jamOption }}" {{ $jadwal->jam == $jamOption ? 'selected' : '' }}>{{ $jamMulai }}:00 - {{ $jamSelesai }}:00</option>
-                    @endfor
+                    <option value="">Pilih Jam</option>
+                    <option value="07:00-08:40">07:00 - 08:40</option>
+                    <option value="08:45-10:25">08:45 - 10:25</option>
+                    <option value="10:30-12:00">10:30 - 12:00</option>
+                    <option value="13:30-14:40">13:30 - 14:40</option>
+                    <option value="14:45-16:25">14:45 - 16:25</option>
+                    <option value="16:30-18:10">16:30 - 18:10</option>
                 </select>
             </div>
             <div class="form-group">

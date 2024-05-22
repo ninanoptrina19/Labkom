@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('data_dosen', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Menambahkan kolom user_id dan relasi
-            $table->string('kode')->unique(); 
             $table->string('nama');
             $table->integer('nidn');
             $table->string('alamat');

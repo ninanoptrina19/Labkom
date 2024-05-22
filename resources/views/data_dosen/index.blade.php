@@ -17,7 +17,6 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Kode</th>
                     <th scope="col">Nama</th>
                     <th scope="col">NIDN</th>
                     <th scope="col">Alamat</th>
@@ -29,7 +28,6 @@
             <tbody>
                 @foreach ($dosens as $dosen)
                     <tr>
-                        <td>{{ $dosen->kode }}</td>
                         <td>{{ $dosen->nama }}</td>
                         <td>{{ $dosen->nidn }}</td>
                         <td>{{ $dosen->alamat }}</td>

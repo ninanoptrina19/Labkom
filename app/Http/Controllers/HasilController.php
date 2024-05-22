@@ -36,7 +36,6 @@ class HasilController extends Controller
     {
        
         $validatedData = $request->validate([
-            'dosen_id' => 'required',
             'prodi' => 'required',
             'mata_kuliah' => 'required',
             'laboratorium_id' => 'required',

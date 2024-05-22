@@ -60,6 +60,7 @@
                     <option value="Rabu">Rabu</option>
                     <option value="Kamis">Kamis</option>
                     <option value="Jumat">Jumat</option>
+                    <option value="Sabtu">Sabtu</option>
                 </select>
             </div>
 
@@ -67,15 +68,15 @@
                 <label for="jam">Jam:</label>
                 <select name="jam" class="form-control" required>
                     <option value="">Pilih Jam</option>
-                    @for ($i = 8; $i <= 16; $i++)
-                        @php
-                            $jamMulai = sprintf("%02d", $i);
-                            $jamSelesai = sprintf("%02d", $i + 1);
-                        @endphp
-                        <option value="{{ $jamMulai }}:00-{{ $jamSelesai }}:00">{{ $jamMulai }}:00 - {{ $jamSelesai }}:00</option>
-                    @endfor
+                    <option value="07:00-08:40">07:00 - 08:40</option>
+                    <option value="08:45-10:25">08:45 - 10:25</option>
+                    <option value="10:30-12:00">10:30 - 12:00</option>
+                    <option value="13:30-14:40">13:30 - 14:40</option>
+                    <option value="14:45-16:25">14:45 - 16:25</option>
+                    <option value="16:30-18:10">16:30 - 18:10</option>
                 </select>
             </div>
+            
 
             <div class="form-group">
                 <label for="tahun_akademik">Tahun Akademik:</label>
