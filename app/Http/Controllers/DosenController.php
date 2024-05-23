@@ -1,18 +1,26 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\DataDosen;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Support\Facades\Auth;
+
 class DosenController extends Controller
 {
     public function index()
     {
-        
+
         $dosens = DataDosen::all();
         return view('data_dosen.index', compact('dosens'));
+    }
+    public function profil()
+    {
+        $dosen = DataDosen::where('user_id', Auth::id())->with('user')->first();
+        return view('data_dosen.profil', compact('dosen'));
     }
 
     public function create()

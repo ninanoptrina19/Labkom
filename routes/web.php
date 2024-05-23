@@ -29,11 +29,11 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dosen', [DosenController::class, 'index'])->name('data_dosens.index');
+Route::get('/profil', [DosenController::class, 'profil'])->name('profil.index');
 Route::get('/data_dosens/create', [DosenController::class, 'create'])->name('data_dosens.create');
 Route::post('/data_dosens', [DosenController::class, 'store'])->name('data_dosens.store');
 Route::get('/data_dosens/edit/{id}', [DosenController::class, 'edit'])->name('data_dosens.edit');
@@ -71,5 +71,3 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // Route::post('/data_hasil/edit/{id}', [HasilController::class, 'edit'])->name('data_hasil.edit');
 // Route::put('/data_hasil/update/{id}', [HasilController::class, 'update'])->name('data_hasil.update');
 // Route::delete('/data_hasil/destroy/{id}', [HasilController::class, 'destroy'])->name('data_hasil.destroy');
-
-
