@@ -20,6 +20,7 @@ class JadwalController extends Controller
         $semesterFilter = $request->input('semester');
         $prodiFilter = $request->input('prodi');
 
+
         if (auth()->user()->roles == 'admin') {
             $jadwalQuery = DataJadwal::query();
             if ($tahunAkademikFilter) {
@@ -62,12 +63,13 @@ class JadwalController extends Controller
     {
         $dosens = DataDosen::all();
         $laboratoriums = DataLaboratorium::all();
-        return view('jadwal.create', compact('dosens', 'laboratoriums'));
+        $existingSchedules = DataJadwal::all();
+
+        return view('jadwal.create', compact('dosens', 'laboratoriums', 'existingSchedules'));
     }
 
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'dosen_id' => 'required',
             'prodi' => 'required',
@@ -75,7 +77,7 @@ class JadwalController extends Controller
             'laboratorium_id' => 'required',
             'hari' => 'required',
             'jam' => 'required',
-            'semester' => 'required', // Menambahkan validasi untuk semester
+            'semester' => 'required',
             'angkatan' => 'required',
             'keterangan' => 'nullable',
             'tahun_akademik' => 'required',
@@ -83,13 +85,25 @@ class JadwalController extends Controller
             'required' => 'harus diisi'
         ]);
 
-        // try {
-        //     DataJadwal::create($validatedData);
-        // } catch (Exception $e) {
-        //     dd($e);
-        // }
+        try {
+            $existingSchedule = DataJadwal::where('laboratorium_id', $request->laboratorium_id)
+                ->where('hari', $request->hari)
+                ->where('jam', $request->jam)
+                ->where('semester', $request->semester)
+                ->where('tahun_akademik', $request->tahun_akademik)
+                ->exists();
 
-        return redirect()->route('data_jadwal.index')->with('success', 'Data Jadwal berhasil ditambahkan!');
+            if ($existingSchedule) {
+                return redirect()->back()->withErrors(['Jadwal bentrok dengan jadwal lain.'])->withInput();
+            }
+
+            // Simpan data
+            DataJadwal::create($validatedData);
+
+            return redirect()->route('data_jadwal.index')->with('success', 'Data Jadwal berhasil ditambahkan!');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['Terjadi kesalahan saat menyimpan data: ' . $e->getMessage()])->withInput();
+        }
     }
 
 

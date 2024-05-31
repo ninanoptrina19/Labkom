@@ -40,9 +40,9 @@
                     <option value="dosen" {{ $user->roles == 'dosen' ? 'selected' : '' }}>Dosen</option>
                 </select>
             </div>
-            
-            
+            <br></br>
             <button type="submit" class="btn btn-primary">Simpan</button>
+            <a href="{{ url('/user') }}" class="btn btn-secondary">Batal</a>
         </form>
     </div>
 @endsection

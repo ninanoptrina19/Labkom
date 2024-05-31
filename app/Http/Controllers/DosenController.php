@@ -73,9 +73,9 @@ class DosenController extends Controller
         $user = User::findOrFail($dosen->user_id);
         $validatedData = $request->validate([
             'nama' => 'required',
-            'nidn' => 'required|integer',
+            'nidn' => 'required',
             'alamat' => 'required',
-            'telepon' => 'required|integer',
+            'telepon' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:6',
         ]);

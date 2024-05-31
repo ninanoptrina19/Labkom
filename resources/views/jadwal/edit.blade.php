@@ -70,16 +70,16 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="tahun_akademik">Tahun Akademik:</label>
-                <input type="text" name="tahun_akademik" class="form-control" value="{{$jadwal->tahun_akademik}}" required>
-            </div>
-            <div class="form-group">
                 <label for="semester">Semester:</label>
                 <select name="semester" class="form-control" required>
                     <option value="">Pilih Semester</option>
                     <option value="Ganjil">Ganjil</option>
                     <option value="Genap">Genap</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <label for="tahun_akademik">Tahun Akademik:</label>
+                <input type="text" name="tahun_akademik" class="form-control" value="{{$jadwal->tahun_akademik}}" required>
             </div>
             <div class="form-group">
                 <label for="angkatan">Angkatan:</label>
@@ -89,7 +89,9 @@
                 <label for="keterangan">Keterangan:</label>
                 <input type="text" name="keterangan" class="form-control" value="{{ $jadwal->keterangan }}" required>
             </div>
+            <br></br>
             <button type="submit" class="btn btn-primary">Simpan</button>
+            <a href="{{ url('/jadwal') }}" class="btn btn-secondary">Batal</a>
         </form>
     </div>
 @endsection

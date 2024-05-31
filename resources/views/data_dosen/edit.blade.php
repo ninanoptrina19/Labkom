@@ -42,7 +42,9 @@
                 <label for="password">Password (Biarkan kosong jika tidak ingin mengubah):</label>
                 <input type="password" name="password" class="form-control">
             </div>
+            <br></br>
             <button type="submit" class="btn btn-primary">Simpan</button>
+            <a href="{{ url('/dosen') }}" class="btn btn-secondary">Batal</a>
         </form>
     </div>
 @endsection

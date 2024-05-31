@@ -11,8 +11,10 @@
                 </div>
                 <div class="card-body">
                     <p><strong>NIDN:</strong> {{ $dosen->nidn }}</p>
-                    <p><strong>Email:</strong> {{ $dosen->user->email }}</p>
                     <p><strong>Alamat:</strong> {{ $dosen->alamat }}</p>
+                    <p><strong>Email:</strong> {{ $dosen->user->email }}</p>
+                    <p><strong>Telepon:</strong> {{ $dosen->telepon }}</p>
+
                     <!-- Tambahkan field lain yang diperlukan -->
 
                     <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">Reset Password</button>

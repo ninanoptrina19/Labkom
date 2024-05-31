@@ -32,7 +32,9 @@
                 <label for="kapasitas">Kapasitas:</label>
                 <input type="string" name="kapasitas" class="form-control" value="{{ $dataLaboratorium->kapasitas }}" required>
             </div>
+            <br></br>
             <button type="submit" class="btn btn-primary">Simpan</button>
+            <a href="{{ url('/laboratorium') }}" class="btn btn-secondary">Batal</a>
         </form>
     </div>
 @endsection
