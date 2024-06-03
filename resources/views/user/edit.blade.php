@@ -40,6 +40,10 @@
                     <option value="dosen" {{ $user->roles == 'dosen' ? 'selected' : '' }}>Dosen</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
             <br></br>
             <button type="submit" class="btn btn-primary">Simpan</button>
             <a href="{{ url('/user') }}" class="btn btn-secondary">Batal</a>

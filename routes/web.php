@@ -34,6 +34,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dosen', [DosenController::class, 'index'])->name('data_dosens.index');
 Route::get('/profil', [DosenController::class, 'profil'])->name('profil.index');
+Route::put('/profilUpdate', [DosenController::class, 'profilUpdate'])->name('profil.profilUpdate');
+// Route::post('/profil', [DosenController::class, 'editprofil'])->name('profil.edit');
+// Route::post('/profil', [DosenController::class, 'update'])->name('profil.update');
+Route::delete('/profil/destroy/{id}', [DosenController::class, 'destroy'])->name('dosens_profil.destroy');
 Route::get('/data_dosens/create', [DosenController::class, 'create'])->name('data_dosens.create');
 Route::post('/data_dosens', [DosenController::class, 'store'])->name('data_dosens.store');
 Route::get('/data_dosens/edit/{id}', [DosenController::class, 'edit'])->name('data_dosens.edit');

@@ -110,4 +110,43 @@ class DosenController extends Controller
 
         return redirect()->route('data_dosens.index')->with('success', 'Data Dosen berhasil dihapus!');
     }
+    public function editProfil()
+    {
+        $dosen = DataDosen::where('user_id', Auth::id())->with('user')->first();
+        return view('data_dosen.edit_profil', compact('dosen'));
+    }
+
+    public function profilUpdate(Request $request)
+    {
+
+        $dosen = DataDosen::where('user_id', Auth::id())->first();
+        $user = User::findOrFail($dosen->user_id);
+
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'nidn' => 'required',
+            'alamat' => 'required',
+            'telepon' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:6',
+        ]);
+
+
+
+        // Perbarui data user
+        $user->update([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => $request->password ? Hash::make($validatedData['password']) : $user->password,
+        ]);
+
+        // Perbarui data dosen
+        $dosen->update([
+            'nidn' => $validatedData['nidn'],
+            'alamat' => $validatedData['alamat'],
+            'telepon' => $validatedData['telepon'],
+        ]);
+
+        return redirect()->route('profil.index')->with('success', 'Profil berhasil diperbarui!');
+    }
 }

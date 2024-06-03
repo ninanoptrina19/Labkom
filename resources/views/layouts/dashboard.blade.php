@@ -203,15 +203,18 @@
                     <li>
                       <div class="dropdown-divider"></div>
                     </li>
-                    <li>
-                      <a class="dropdown-item" href="/profil">
-                        <i class="bx bx-user me-2"></i>
-                        <span class="align-middle">My Profile</span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
+                   @if (Auth::user()->roles == 'dosen')
+                   <li>
+                    <a class="dropdown-item" href="/profil">
+                      <i class="bx bx-user me-2"></i>
+                      <span class="align-middle">My Profile</span>
+                    </a>
+                  </li>
+                  <li>
+                    <div class="dropdown-divider"></div>
+                  </li>
+                   @endif
+                   
                     <li>
 
                       <a class="dropdown-item" href="{{ route('logout') }}"
