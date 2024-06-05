@@ -4,10 +4,10 @@
     <div class="container mt-4">
         <h1>Daftar Jadwal</h1>
 
-        <a href="{{ route('data_jadwal.create') }}" class="btn btn-primary mb-3">Tambah jadwal</a>
+        <a href="{{ route('data_jadwal.create') }}" class="btn btn-primary mb-3">Tambah Jadwal</a>
 
         @if (Auth::user()->roles == 'admin')
-        <a href="{{ route('hasil.pdf', ['tahun_akademik' => request('tahun_akademik'),'prodi' => request('prodi'), 'semester' => request('semester')]) }}" class="btn btn-primary float-end">Cetak PDF</a>
+            <a href="{{ route('hasil.pdf', ['tahun_akademik' => request('tahun_akademik'),'prodi' => request('prodi'), 'semester' => request('semester')]) }}" class="btn btn-primary float-end">Cetak PDF</a>
         @endif
         
         <form id="filterForm" action="{{ route('data_jadwal.index') }}" method="GET">
@@ -55,7 +55,6 @@
 
         @if (count($jadwal) > 0)
             <div class="table-responsive">
-
                 <table class="table">
                     <thead>
                         <tr>
@@ -75,35 +74,71 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($jadwal as $jadwal)
+                        @foreach ($jadwal as $schedule)
                             <tr>
-                                <td>{{ $jadwal->dosen->nama}}</td>
-                                <td>{{ $jadwal->prodi }}</td>
-                                <td>{{ $jadwal->mata_kuliah }} </td>
-                                <td>{{ $jadwal->laboratorium->nama}}</td>
-                                <td>{{ $jadwal->hari }}</td>
-                                <td>{{ $jadwal->jam}}</td>
-                                <td>{{ $jadwal->semester }}</td>
-                                <td>{{ $jadwal->tahun_akademik }}</td>
-                                <td>{{ $jadwal->angkatan }}</td>
-                                <td>{{ $jadwal->keterangan }}</td>
-        @if (Auth::user()->roles == 'admin')
-        <td>
-            <a href="{{ route('data_jadwal.edit', $jadwal->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                <form action="{{ route('data_jadwal.destroy', $jadwal->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?')" style="display: inline-block;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                </form>
-            </td>
-        @endif
+                                <td>{{ $schedule->dosen->nama }}</td>
+                                <td>{{ $schedule->prodi }}</td>
+                                <td>{{ $schedule->mata_kuliah }}</td>
+                                <td>{{ $schedule->laboratorium->nama }}</td>
+                                <td>{{ $schedule->hari }}</td>
+                                <td>{{ $schedule->jam }}</td>
+                                <td>{{ $schedule->semester }}</td>
+                                <td>{{ $schedule->tahun_akademik }}</td>
+                                <td>{{ $schedule->angkatan }}</td>
+                                <td>{{ $schedule->keterangan }}</td>
+                                @if (Auth::user()->roles == 'admin')
+                                    <td>
+                                        <a href="{{ route('data_jadwal.edit', $schedule->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $schedule->id }}">Hapus</button>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         @else
-        <p>Tidak ada hasil penjadwalan yang ditemukan.</p>
-         @endif
+            <p>Tidak ada hasil penjadwalan yang ditemukan.</p>
+        @endif
     </div>
+
+    <!-- Modal Konfirmasi Hapus -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Konfirmasi Hapus</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Apakah Anda yakin ingin menghapus data ini?
+                </div>
+                <div class="modal-footer">
+                    <form id="deleteForm" action="" method="POST" style="display: inline-block;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-danger">Hapus</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id') // Extract info from data-* attributes
+            var action = "{{ route('data_jadwal.destroy', '') }}/" + id;
+            var modal = $(this)
+            modal.find('#deleteForm').attr('action', action)
+        })
+    </script>
 @endsection

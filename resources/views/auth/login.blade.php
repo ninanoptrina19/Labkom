@@ -48,11 +48,11 @@
                             <button type="submit" class="btn btn-primary">{{ __('Masuk') }}</button>
                         </div>
 
-                        @if (Route::has('password.request'))
+                        {{-- @if (Route::has('password.request'))
                             <div class="mb-0 text-center">
                                 <a class="btn btn-link" href="{{ route('password.request') }}">{{ __('Lupa Kata Sandi?') }}</a>
                             </div>
-                        @endif
+                        @endif --}}
                     </form>
                 </div>
             </div>
