@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('data_jadwal', function (Blueprint $table) {
-            $table->id(); 
+            $table->id();
             $table->unsignedBigInteger('dosen_id');
             $table->string('prodi');
-            $table->string('mata_kuliah');
+            $table->string('penggunaan');
             $table->unsignedBigInteger('laboratorium_id');
             $table->string('hari');
             $table->integer('jam');
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->foreign('dosen_id')->references('id')->on('data_dosen')->onDelete('cascade');
         });
     }
-    
+
 
     /**
      * Reverse the migrations.

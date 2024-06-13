@@ -18,9 +18,8 @@ use App\Http\Controllers\HasilController;
 |
 */
 
-Route::get('/', function () {
-    return view('Auth.login');
-});
+
+Route::get('/', [App\Http\Controllers\LandingpageController::class, 'index']);
 
 'Auth'::routes();
 

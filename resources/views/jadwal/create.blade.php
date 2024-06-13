@@ -32,11 +32,32 @@
             
             <div class="form-group">
                 <label for="prodi">Prodi:</label>
-                <input type="text" name="prodi" class="form-control" required>
+                <select name="prodi" class="form-control" required>
+                    <option value="">Pilih Prodi</option>
+                    <option value="DIII Kebidanan">DIII Kebidanan</option>
+                    <option value="S1 Kebidanan">S1 Kebidanan</option>
+                    <option value="S1 Gizi">S1 Gizi</option>
+                    <option value="S1 Farmasi">S1 Farmasi</option>
+                    <option value="S1 Administrasi Rumah Sakit">S1 Administrasi Rumah Sakit</option>
+                    <option value="S1 Keperawatan">S1 Keperawatan</option>
+                    <option value="NERS">NERS</option>
+                    <option value="S1 Pendidian Guru SD">S1 Pendidian Guru SD</option>
+                    <option value="S1 Pendidikan Matematika">S1 Pendidikan Matematika</option>
+                    <option value="S1 Pendidikan Guru MI">S1 Pendidikan Guru MI</option>
+                    <option value="S1 Pendidikan Agama Islam">S1 Pendidikan Agama Islam</option>
+                    <option value="S1 Sistem Informasi">S1 Sistem Informasi</option>
+                    <option value="S1 Informatika">S1 Informatika</option>
+                    <option value="S1 Manajemen">S1 Manajemen</option>
+                    <option value="S1 Akuntansi">S1 Akuntansi</option>
+                    <option value="S1 Ekonomi Syariah">S1 Ekonomi Syariah</option>
+                    <option value="S1 Perbankan Syariah">S1 Perbankan Syariah</option>
+                    <option value="S2 Kesehatan Masyarakat">S2 Kesehatan Masyarakat</option>
+                    <option value="S2 Pendidikan Agama Islam">S2 Pendidikan Agama Islam</option>
+                </select>
             </div>
             <div class="form-group">
-                <label for="mata_kuliah">Mata Kuliah:</label>
-                <input type="text" name="mata_kuliah" class="form-control" required>
+                <label for="penggunaan"> Penggunaan:</label>
+                <input type="text" name="penggunaan" class="form-control" required>
             </div>
 
             <div class="form-group">

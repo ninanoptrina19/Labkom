@@ -73,7 +73,7 @@ class JadwalController extends Controller
         $validatedData = $request->validate([
             'dosen_id' => 'required',
             'prodi' => 'required',
-            'mata_kuliah' => 'required',
+            'penggunaan' => 'required',
             'laboratorium_id' => 'required',
             'hari' => 'required',
             'jam' => 'required',
@@ -101,7 +101,7 @@ class JadwalController extends Controller
             DataJadwal::create($validatedData);
 
             return redirect()->route('data_jadwal.index')->with('success', 'Data Jadwal berhasil ditambahkan!');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()->back()->withErrors(['Terjadi kesalahan saat menyimpan data: ' . $e->getMessage()])->withInput();
         }
     }
@@ -122,7 +122,7 @@ class JadwalController extends Controller
         $validatedData = $request->validate([
             'dosen_id' => 'required',
             'prodi' => 'required',
-            'mata_kuliah' => 'required',
+            'penggunaan' => 'required',
             'laboratorium_id' => 'required',
             'hari' => 'required',
             'jam' => 'required',

@@ -55,6 +55,7 @@
     <link rel="stylesheet" href="{{asset('assets/')}}/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
     <link rel="stylesheet" href="{{asset('assets/')}}/vendor/libs/apex-charts/apex-charts.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 
     <!-- Page CSS -->
 
@@ -65,6 +66,12 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{asset('assets/')}}/js/config.js"></script>
   </head>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+  
+  </style>
 
   <body>
     <!-- Layout wrapper -->

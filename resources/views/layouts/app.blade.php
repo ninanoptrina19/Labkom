@@ -27,16 +27,16 @@ height: 100%;
     <section class="vh-100">
         <div class="container-fluid h-custom">
           <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-md-9 col-lg-6 col-xl-5">
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+            <div class="col-2 pt-3 ps-2">
+              <img src="{{ asset('/assets/img/illustrations/AlmaAta Logo.png') }}"
                 class="img-fluid" alt="Sample image">
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
               <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                  <p class="lead fw-normal mb-0 me-3">Sign in with</p>
-                </div>
+                  <p class="lead fw-bold text-center mb-0 me-3">SISTEM PENJADWALAN LABKOM</p>
+              </div>
       
                 <div class="divider d-flex align-items-center my-4">
                   {{-- <p class="text-center fw-bold mx-3 mb-0">Or</p> --}}
@@ -58,12 +58,12 @@ height: 100%;
       
                 <div class="d-flex justify-content-between align-items-center">
                   <!-- Checkbox -->
-                  <div class="form-check mb-0">
+                  {{-- <div class="form-check mb-0">
                     <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
                     <label class="form-check-label" for="form2Example3">
                       Remember me
                     </label>
-                  </div>
+                  </div> --}}
                   {{-- <a href="#!" class="text-body">Forgot password?</a> --}}
                 </div>
       
@@ -80,7 +80,7 @@ height: 100%;
           class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
           <!-- Copyright -->
           <div class="text-white mb-3 mb-md-0">
-            Universitas Alma Ata © 2020.
+            NINA NOPTRINA (203200113) © 2024.
           </div>
           <!-- Copyright -->
       

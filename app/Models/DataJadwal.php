@@ -15,7 +15,7 @@ class DataJadwal extends Model
     protected $fillable = [
         'dosen_id',
         'prodi',
-        'mata_kuliah',
+        'penggunaan',
         'laboratorium_id',
         'hari',
         'jam',
