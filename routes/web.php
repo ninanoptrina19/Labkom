@@ -19,7 +19,11 @@ use App\Http\Controllers\HasilController;
 */
 
 
-Route::get('/', [App\Http\Controllers\LandingpageController::class, 'index']);
+// Route::get('/', [App\Http\Controllers\LandingpageController::class, 'index']);
+
+Route::get('/', function () {
+    return view('layouts.app');
+});
 
 'Auth'::routes();
 

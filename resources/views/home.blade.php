@@ -72,7 +72,7 @@
                             <tr>
                                 <th scope="col">Dosen</th>
                                 <th scope="col">Prodi</th>
-                                <th scope="col">Mata Kuliah</th>
+                                <th scope="col">Penggunaan</th>
                                 <th scope="col">Laboratorium</th>
                                 <th scope="col">Hari</th>
                                 <th scope="col">Jam</th>
@@ -86,7 +86,7 @@
                                 <tr>
                                     <td>{{ $jadwal->dosen->nama }}</td>
                                     <td>{{ $jadwal->prodi }}</td>
-                                    <td>{{ $jadwal->mata_kuliah }} </td>
+                                    <td>{{ $jadwal->penggunaan }} </td>
                                     <td>{{ $jadwal->laboratorium->nama }}</td>
                                     <td>{{ $jadwal->hari }}</td>
                                     <td>{{ $jadwal->jam }}</td>

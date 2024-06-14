@@ -101,12 +101,12 @@
 <body>
     <div class="navbar-container">
         <div class="navbar">
-            <div class="col-2 pt-3 ps-2">
+            <div class="col-4 pt-3 ps-2">
                 <img src="{{ asset('/assets/img/illustrations/INFORMATIKA.png') }}"
                   class="img-fluid" alt="Sample image">
               </div>
             <div class="navbar-left">
-                <h3 class="text-bold">PENJADWALAN LAB</h3>
+                {{-- <h3 class="text-bold">PENJADWALAN LAB</h3> --}}
             </div>
             <div class="navbar-right d-flex">
                 @if (Route::has('login'))
@@ -131,11 +131,11 @@
     <div class="container">
         <div class="header-content mb-5">
             <h2 class="fw-bold">Selamat Datang Pada Penjadwalan Praktikum Labkom</h2>
-            <p>Sistem ini dirancang untuk membantu mahasiswa dalam mengatur jadwal praktikum mereka dengan mudah dan efisien. Dengan menggunakan sistem ini, Anda dapat memeriksa dan memilih jadwal yang sesuai dengan kebutuhan Anda.</p>
+            <p>Sistem ini dirancang untuk membantu dosen dalam mengatur jadwal praktikum mereka dengan mudah dan efisien. Dengan menggunakan sistem ini, Anda dapat memeriksa dan memilih jadwal yang sesuai dengan kebutuhan Anda.</p>
             @auth
                 <a href="{{route('form.diagnosa')}}" class="btn btn-primary">Mulai Penjadwalan</a>
             @else
-                <a href="{{ route('login') }}" class="btn btn-primary">Masuk untuk Memulai</a>
+                <a href="{{ route('login') }}" class="btn btn-primary">Login Untuk Membuat Jadwal</a>
             @endauth
         </div>
 
