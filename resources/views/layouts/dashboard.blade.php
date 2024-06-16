@@ -257,8 +257,28 @@
             <!-- Footer -->
             <footer class="content-footer footer bg-footer-theme">
               <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-                
-                
+                <!-- Left -->
+                <div class="mb-2 mb-md-0">
+                  <span class="footer-text fw-bold text-primary">&copy; 2024 Nina Noptrina (203200113)</span>
+                </div>
+                <!-- / Left -->
+
+                <!-- Right -->
+                <div>
+                  <a href="#!" class="text-white me-4">
+                    <i class="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="#!" class="text-white me-4">
+                    <i class="fab fa-twitter"></i>
+                  </a>
+                  <a href="#!" class="text-white me-4">
+                    <i class="fab fa-google"></i>
+                  </a>
+                  <a href="#!" class="text-white">
+                    <i class="fab fa-linkedin-in"></i>
+                  </a>
+                </div>
+                <!-- / Right -->
               </div>
             </footer>
             <!-- / Footer -->
