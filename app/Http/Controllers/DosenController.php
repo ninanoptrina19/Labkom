@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\DataDosen;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class DosenController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request);
+        // Validasi data
         $validatedData = $request->validate([
             'nama' => 'required',
             'nidn' => 'required',
@@ -38,26 +39,44 @@ class DosenController extends Controller
             'telepon' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
+        ], [
+            'nama.required' => 'Nama harus diisi',
+            'nidn.required' => 'NIDN harus diisi',
+            'alamat.required' => 'Alamat harus diisi',
+            'telepon.required' => 'Telepon harus diisi',
+            'email.required' => 'Email harus diisi',
+            'email.email' => 'Email tidak valid',
+            'email.unique' => 'Email sudah digunakan',
+            'password.required' => 'Password harus diisi',
+            'password.min' => 'Password minimal 6 karakter',
         ]);
 
-        // Buat user baru
-        $user = User::create([
-            'name' => $validatedData['nama'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
-            'roles' => 'dosen',
-        ]);
+        DB::beginTransaction();
+        try {
+            // Buat user baru
+            $user = User::create([
+                'name' => $validatedData['nama'],
+                'email' => $validatedData['email'],
+                'password' => Hash::make($validatedData['password']),
+                'roles' => 'dosen',
+            ]);
 
-        // Buat data dosen baru
-        DataDosen::create([
-            'user_id' => $user->id,
-            'nama' => $validatedData['nama'],
-            'nidn' => $validatedData['nidn'],
-            'alamat' => $validatedData['alamat'],
-            'telepon' => $validatedData['telepon'],
-        ]);
+            // Buat data dosen baru
+            DataDosen::create([
+                'user_id' => $user->id,
+                'nama' => $validatedData['nama'],
+                'nidn' => $validatedData['nidn'],
+                'alamat' => $validatedData['alamat'],
+                'telepon' => $validatedData['telepon'],
+            ]);
 
-        return redirect()->route('data_dosens.index')->with('success', 'Data Dosen berhasil ditambahkan!');
+            DB::commit();
+
+            return redirect()->route('data_dosens.index')->with('success', 'Data Dosen berhasil ditambahkan!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menambahkan data. Silakan coba lagi.']);
+        }
     }
 
     public function edit($id)
@@ -78,6 +97,15 @@ class DosenController extends Controller
             'telepon' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:6',
+        ], [
+            'nama.required' => 'Nama tidak boleh kosong',
+            'nidn.required' => 'NIDN tidak boleh kosong',
+            'alamat.required' => 'Alamat tidak boleh kosong',
+            'telepon.required' => 'Telepon tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
+            'email.email' => 'Email tidak valid',
+            'email.unique' => 'Email sudah digunakan',
+            'password.min' => 'Password minimal 6 karakter',
         ]);
 
         // Temukan data dosen berdasarkan ID

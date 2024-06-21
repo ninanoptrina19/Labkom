@@ -23,6 +23,10 @@ class LaboratoriumController extends Controller
         $validatedData = $request->validate([
             'nama' => 'required',
             'kapasitas' => 'required|integer',
+        ], [
+            'nama.required' => 'Nama Laboratorium harus diisi',
+            'kapasitas.required' => 'Kapasitas harus diisi',
+            'kapasitas.integer' => 'Kapasitas harus berupa angka',
         ]);
 
         DataLaboratorium::create($validatedData);
@@ -34,21 +38,25 @@ class LaboratoriumController extends Controller
     {
         $dataLaboratorium = DataLaboratorium::find($id);
 
-        
+
         return view('data_laboratorium.edit', compact('dataLaboratorium'));
     }
 
     public function update(Request $request, $id)
     {
-        
+
         $validatedData = $request->validate([
             'nama' => 'required',
             'kapasitas' => 'required|integer',
+        ], [
+            'nama.required' => 'Nama Laboratorium harus diisi',
+            'kapasitas.required' => 'Kapasitas harus diisi',
+            'kapasitas.integer' => 'Kapasitas harus berupa angka',
         ]);
 
         // Temukan data berdasarkan ID
         $dataLaboratorium = DataLaboratorium::find($id);
-    
+
 
         // Perbarui data dengan data yang validasi
         $dataLaboratorium->update($validatedData);

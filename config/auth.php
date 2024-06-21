@@ -111,5 +111,7 @@ return [
     */
 
     'password_timeout' => 10800,
+    'failed' => 'Kredensial ini tidak cocok dengan catatan kami.',
+    'throttle' => 'Terlalu banyak percobaan masuk. Silakan coba lagi dalam :seconds detik.',
 
 ];

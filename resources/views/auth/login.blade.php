@@ -5,6 +5,15 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-lg">
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div><br />
+            @endif
                 <div class="card-header bg-primary text-white text-center">
                     <h3>{{ __('Masuk') }}</h3>
                 </div>

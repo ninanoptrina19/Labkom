@@ -12,6 +12,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
+        // $users = User::where('roles', 'admin')->get();
         return view('user.index', compact('users'));
     }
     public function create()
@@ -27,9 +28,14 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required',
+            'name' => 'required|regex:/^[\pL\s]+$/u',
             'email' => 'required',
             'roles' => 'required',
+        ], [
+            'name.required' => 'Please enter your name',
+            'email.required' => 'Please enter your email',
+            'roles.required' => 'Please select your role',
+            'name.regex' => 'Nama harus berupa huruf.',
         ]);
 
         // Buat password default berdasarkan nama dosen
@@ -49,6 +55,13 @@ class UserController extends Controller
             'email' => 'required|email',
             'roles' => 'required',
             'password' => 'required|min:8', // tambahkan validasi password
+        ], [
+            'name.required' => 'Please enter your name',
+            'email.required' => 'Please enter your email',
+            'email.email' => 'Please enter a valid email',
+            'roles.required' => 'Please select your role',
+            'password.required' => 'Please enter your password',
+            'password.min' => 'Password must be at least 8 characters',
         ]);
 
         $user = User::findOrFail($id);

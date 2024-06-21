@@ -82,7 +82,8 @@ class JadwalController extends Controller
             'keterangan' => 'nullable',
             'tahun_akademik' => 'required',
         ], [
-            'required' => 'harus diisi'
+            'required' => 'harus diisi',
+
         ]);
 
         try {
@@ -130,6 +131,8 @@ class JadwalController extends Controller
             'angkatan' => 'required',
             'keterangan' => 'nullable',
             'tahun_akademik' => 'required',
+        ], [
+            'required' => 'harus diisi'
         ]);
 
         // Temukan data berdasarkan ID
