@@ -147,7 +147,7 @@
                     <tr>
                         <th scope="col">Dosen</th>
                         <th scope="col">Prodi</th>
-                        <th scope="col">penggunaan</th>
+                        <th scope="col">Penggunaan</th>
                         <th scope="col">Laboratorium</th>
                         <th scope="col">Hari</th>
                         <th scope="col">Jam</th>

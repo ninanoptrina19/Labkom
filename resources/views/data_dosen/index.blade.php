@@ -13,6 +13,8 @@
         @endif
 
         <table class="table">
+            
+
             <thead>
                 <tr>
                     <th scope="col">Nama</th>
@@ -32,8 +34,10 @@
                         <td>{{ $dosen->user->email }}</td>
                         <td>{{ $dosen->telepon }}</td>
                         <td>
-                            <a href="{{ url('/data_dosens/edit/' . $dosen->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <div class="d-flex gap-2">
+                                <a href="{{ url('/data_dosens/edit/' . $dosen->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $dosen->id }}">Hapus</button>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
@@ -55,6 +59,7 @@
                     Apakah Anda yakin ingin menghapus data ini?
                 </div>
                 <div class="modal-footer">
+                    
                     <form id="deleteForm" action="" method="POST" style="display: inline-block;">
                         @csrf
                         @method('DELETE')

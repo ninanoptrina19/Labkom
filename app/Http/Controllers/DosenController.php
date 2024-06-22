@@ -15,7 +15,7 @@ class DosenController extends Controller
     public function index()
     {
 
-        $dosens = DataDosen::all();
+        $dosens = DataDosen::orderBy('created_at', 'asc')->get();
         return view('data_dosen.index', compact('dosens'));
     }
     public function profil()

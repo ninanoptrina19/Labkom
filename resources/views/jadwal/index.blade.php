@@ -88,8 +88,10 @@
                                 <td>{{ $schedule->keterangan }}</td>
                                 @if (Auth::user()->roles == 'admin')
                                     <td>
+                                        <div class="d-flex gap-2">
                                         <a href="{{ route('data_jadwal.edit', $schedule->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                         <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $schedule->id }}">Hapus</button>
+                                        </div>
                                     </td>
                                 @endif
                             </tr>

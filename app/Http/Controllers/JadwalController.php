@@ -16,6 +16,7 @@ class JadwalController extends Controller
 
     public function index(Request $request)
     {
+
         $tahunAkademikFilter = $request->input('tahun_akademik');
         $semesterFilter = $request->input('semester');
         $prodiFilter = $request->input('prodi');
@@ -90,8 +91,8 @@ class JadwalController extends Controller
             $existingSchedule = DataJadwal::where('laboratorium_id', $request->laboratorium_id)
                 ->where('hari', $request->hari)
                 ->where('jam', $request->jam)
-                ->where('semester', $request->semester)
-                ->where('tahun_akademik', $request->tahun_akademik)
+                // ->where('semester', $request->semester)
+                // ->where('tahun_akademik', $request->tahun_akademik)
                 ->exists();
 
             if ($existingSchedule) {
