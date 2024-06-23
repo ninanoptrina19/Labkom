@@ -27,7 +27,6 @@
                     <form method="POST" action="{{ route('profil.profilUpdate', $dosen->id) }}">
                         @csrf
                         @method('PUT')
-
                         <div class="form-group">
                             <label for="name">name:</label>
                             <input type="text" class="form-control" id="name" name="name" value="{{ $dosen->user->name }}">

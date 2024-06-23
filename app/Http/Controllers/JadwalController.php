@@ -91,8 +91,6 @@ class JadwalController extends Controller
             $existingSchedule = DataJadwal::where('laboratorium_id', $request->laboratorium_id)
                 ->where('hari', $request->hari)
                 ->where('jam', $request->jam)
-                // ->where('semester', $request->semester)
-                // ->where('tahun_akademik', $request->tahun_akademik)
                 ->exists();
 
             if ($existingSchedule) {
@@ -135,10 +133,18 @@ class JadwalController extends Controller
         ], [
             'required' => 'harus diisi'
         ]);
+        $existingSchedule = DataJadwal::where('laboratorium_id', $request->laboratorium_id)
+            ->where('hari', $request->hari)
+            ->where('jam', $request->jam)
+            ->exists();
 
+        if ($existingSchedule) {
+            return redirect()->back()->withErrors(['Jadwal bentrok dengan jadwal lain.'])->withInput();
+        }
         // Temukan data berdasarkan ID
         $dataJadwal = DataJadwal::find($id);
         // Perbarui data dengan data yang validasi
+
         $dataJadwal->update($validatedData);
 
         // Redirect dengan pesan sukses

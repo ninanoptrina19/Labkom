@@ -30,7 +30,7 @@
                 <th>No</th>
                 <th>Dosen</th>
                 <th>Prodi</th>
-                <th>Mata Kuliah</th>
+                <th>Penggunaan</th>
                 <th>Laboratorium</th>
                 <th>Hari</th>
                 <th>Jam</th>
@@ -46,7 +46,7 @@
                     <td>{{ $loop->iteration}}</td>
                     <td>{{ $data->dosen->nama }}</td>
                     <td>{{ $data->prodi }}</td>
-                    <td>{{ $data->mata_kuliah }}</td>
+                    <td>{{ $data->penggunaan }}</td>
                     <td>{{ $data->laboratorium->nama }}</td>
                     <td>{{ $data->hari }}</td>
                     <td>{{ $data->jam }}</td>
