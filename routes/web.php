@@ -7,6 +7,7 @@ use App\Http\Controllers\LaboratoriumController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\HasilController;
+use App\Http\Controllers\TahunAkademikController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,6 +54,14 @@ Route::post('/data_laboratorium', [LaboratoriumController::class, 'store'])->nam
 Route::get('/data_laboratorium/edit/{id}', [LaboratoriumController::class, 'edit'])->name('data_laboratorium.edit');
 Route::put('/data_laboratorium/update/{id}', [LaboratoriumController::class, 'update'])->name('data_laboratorium.update');
 Route::delete('/data_laboratorium/destroy/{id}', [LaboratoriumController::class, 'destroy'])->name('data_laboratorium.destroy');
+
+Route::get('/tahun_akademik', [TahunAkademikController::class, 'index'])->name('tahun_akademik.index');
+Route::get('/tahun_akademik/create', [TahunAkademikController::class, 'create'])->name('tahun_akademik.create');
+Route::post('/tahun_akademik', [TahunAkademikController::class, 'store'])->name('tahun_akademik.store');
+Route::get('/tahun_akademik/edit/{id}', [TahunAkademikController::class, 'edit'])->name('tahun_akademik.edit');
+Route::put('/tahun_akademik/update/{id}', [TahunAkademikController::class, 'update'])->name('tahun_akademik.update');
+Route::delete('/tahun_akademik/destroy/{id}', [TahunAkademikController::class, 'destroy'])->name('tahun_akademik.destroy');
+
 
 Route::get('/jadwal', [JadwalController::class, 'index'])->name('data_jadwal.index');
 Route::get('/data_jadwal/create', [JadwalController::class, 'create'])->name('data_jadwal.create');

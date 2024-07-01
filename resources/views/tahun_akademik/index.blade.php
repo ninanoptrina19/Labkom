@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="container mt-4">
-        <h1>Daftar Data Dosen</h1>
+        <h1>Daftar Tahun tahun_akademik</h1>
 
-        <a href="{{ route('data_dosens.create') }}" class="btn btn-primary mb-3">Tambah Data Dosen</a>
+        <a href="{{ route('tahun_akademik.create') }}" class="btn btn-primary mb-3">Tambah Tahun Akademik</a>
 
         @if(session('success'))
             <div class="alert alert-success" role="alert">
@@ -13,36 +13,26 @@
         @endif
 
         <table class="table">
-            
-
             <thead>
                 <tr>
+                    <th scope="col">No</th>
                     <th scope="col">Nama</th>
-                    <th scope="col">NIDN</th>
-                    <th scope="col">Prodi</th>
-                    <th scope="col">Fakultas</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Telepon</th>
                     <th scope="col">Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($dosens as $dosen)
-                    <tr>
-                        <td>{{ $dosen->nama }}</td>
-                        <td>{{ $dosen->nidn }}</td>
-                        <td>{{ $dosen->prodi }}</td>
-                        <td>{{ $dosen->fakultas }}</td>
-                        <td>{{ $dosen->user->email }}</td>
-                        <td>{{ $dosen->telepon }}</td>
-                        <td>
-                            <div class="d-flex gap-2">
-                                <a href="{{ url('/data_dosens/edit/' . $dosen->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $dosen->id }}">Hapus</button>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
+                @foreach ($tahun_akademik as $item)
+                <tr>
+                    <td>{{$loop->iteration}}</td>
+                    <td>{{ $item->nama }}</td>
+                    <td>
+                        <div class="d-flex gap-2">
+                        <a href="{{ route('data_jadwal.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $item->id }}">Hapus</button>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
             </tbody>
         </table>
     </div>
@@ -61,7 +51,6 @@
                     Apakah Anda yakin ingin menghapus data ini?
                 </div>
                 <div class="modal-footer">
-                    
                     <form id="deleteForm" action="" method="POST" style="display: inline-block;">
                         @csrf
                         @method('DELETE')
@@ -82,7 +71,7 @@
         $('#confirmDeleteModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
             var id = button.data('id') // Extract info from data-* attributes
-            var action = "{{ route('data_dosens.destroy', '') }}/" + id;
+            var action = "{{ route('tahun_akademik.destroy', '') }}/" + id;
             var modal = $(this)
             modal.find('#deleteForm').attr('action', action)
         })

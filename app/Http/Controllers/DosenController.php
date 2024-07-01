@@ -35,14 +35,16 @@ class DosenController extends Controller
         $validatedData = $request->validate([
             'nama' => 'required',
             'nidn' => 'required',
-            'alamat' => 'required',
+            'prodi' => 'required',
+            'fakultas' => 'required',
             'telepon' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
         ], [
             'nama.required' => 'Nama harus diisi',
             'nidn.required' => 'NIDN harus diisi',
-            'alamat.required' => 'Alamat harus diisi',
+            'prodi.required' => 'Prodi harus diisi',
+            'fakultas.required' => 'Fakultas harus diisi',
             'telepon.required' => 'Telepon harus diisi',
             'email.required' => 'Email harus diisi',
             'email.email' => 'Email tidak valid',
@@ -66,7 +68,8 @@ class DosenController extends Controller
                 'user_id' => $user->id,
                 'nama' => $validatedData['nama'],
                 'nidn' => $validatedData['nidn'],
-                'alamat' => $validatedData['alamat'],
+                'prodi' => $validatedData['prodi'],
+                'fakultas' => $validatedData['fakultas'],
                 'telepon' => $validatedData['telepon'],
             ]);
 
@@ -93,14 +96,16 @@ class DosenController extends Controller
         $validatedData = $request->validate([
             'nama' => 'required',
             'nidn' => 'required',
-            'alamat' => 'required',
+            'prodi' => 'required',
+            'fakultas' => 'required',
             'telepon' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:6',
         ], [
             'nama.required' => 'Nama tidak boleh kosong',
             'nidn.required' => 'NIDN tidak boleh kosong',
-            'alamat.required' => 'Alamat tidak boleh kosong',
+            'prodi.required' => 'prodi tidak boleh kosong',
+            'fakultas.required' => 'Telepon tidak boleh kosong',
             'telepon.required' => 'Telepon tidak boleh kosong',
             'email.required' => 'Email tidak boleh kosong',
             'email.email' => 'Email tidak valid',
@@ -123,7 +128,8 @@ class DosenController extends Controller
         $dosen->update([
             'nama' => $validatedData['nama'],
             'nidn' => $validatedData['nidn'],
-            'alamat' => $validatedData['alamat'],
+            'prodi' => $validatedData['prodi'],
+            'fakultas' => $validatedData['fakultas'],
             'telepon' => $validatedData['telepon'],
         ]);
 
@@ -153,7 +159,8 @@ class DosenController extends Controller
         $validatedData = $request->validate([
             'name' => 'required',
             'nidn' => 'required',
-            'alamat' => 'required',
+            'prodi' => 'required',
+            'fakultas' => 'required',
             'telepon' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:6',
@@ -171,7 +178,8 @@ class DosenController extends Controller
         // Perbarui data dosen
         $dosen->update([
             'nidn' => $validatedData['nidn'],
-            'alamat' => $validatedData['alamat'],
+            'prodi' => $validatedData['prodi'],
+            'fakultas' => $validatedData['fakultas'],
             'telepon' => $validatedData['telepon'],
         ]);
 

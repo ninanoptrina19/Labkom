@@ -16,7 +16,8 @@ class DataDosen extends Model
         'user_id',
         'nama',
         'nidn',
-        'alamat',
+        'prodi',
+        'fakultas',
         'telepon',
     ];
 

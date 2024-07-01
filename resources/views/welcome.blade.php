@@ -145,31 +145,27 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Dosen</th>
-                        <th scope="col">Prodi</th>
-                        <th scope="col">Penggunaan</th>
-                        <th scope="col">Laboratorium</th>
                         <th scope="col">Hari</th>
                         <th scope="col">Jam</th>
-                        <th scope="col">Semester</th>
-                        <th scope="col">Tahun Akademik</th>
-                        <th scope="col">Angkatan</th>
-                        <th scope="col">Keterangan</th>
+                        <th scope="col">Laboratorium</th>
+                        <th scope="col">Penggunaan/Mata_Kuliah</th>
+                        <th scope="col">Dosen</th>
+                        <th scope="col">Prodi</th>
+                        <th scope="col">Tanggal_Mulai</th>
+                        <th scope="col">Tanggal_Selesai</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($jadwal as $schedule)
                         <tr>
-                            <td>{{ $schedule->dosen->nama }}</td>
-                            <td>{{ $schedule->prodi }}</td>
-                            <td>{{ $schedule->penggunaan }}</td>
-                            <td>{{ $schedule->laboratorium->nama }}</td>
                             <td>{{ $schedule->hari }}</td>
                             <td>{{ $schedule->jam }}</td>
-                            <td>{{ $schedule->semester }}</td>
-                            <td>{{ $schedule->tahun_akademik }}</td>
-                            <td>{{ $schedule->angkatan }}</td>
-                            <td>{{ $schedule->keterangan }}</td>
+                            <td>{{ $schedule->laboratorium->nama }}</td>
+                            <td>{{ $schedule->penggunaan }}</td>
+                            <td>{{ $schedule->dosen->nama }}</td>
+                            <td>{{ $schedule->prodi }}</td>
+                            <td>{{ $schedule->tanggal_mulai }}</td>
+                            <td>{{ $schedule->tanggal_selesai }}</td>
                            
                         </tr>
                     @endforeach

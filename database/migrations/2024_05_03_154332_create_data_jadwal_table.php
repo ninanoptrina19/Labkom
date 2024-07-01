@@ -13,18 +13,17 @@ return new class extends Migration
     {
         Schema::create('data_jadwal', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('dosen_id');
-            $table->string('prodi');
-            $table->string('penggunaan');
-            $table->unsignedBigInteger('laboratorium_id');
             $table->string('hari');
             $table->integer('jam');
-            $table->string('tahun_akademik'); // Menambahkan kolom tahun akademik
-            $table->enum('semester', ['GANJIL', 'GENAP']); // Mengubah kolom semester menjadi enum
-            $table->string('angkatan');
-            $table->string('keterangan')->nullable(); // Menambahkan nullable agar tidak wajib diisi
+            $table->unsignedBigInteger('laboratorium_id');
+            $table->string('penggunaan/mata_kuliah');
+            $table->unsignedBigInteger('dosen_id');
+            $table->string('prodi');
+            $table->string('tahun_akademik_id');
+            $table->date('tanggal');
             $table->timestamps();
             $table->foreign('laboratorium_id')->references('id')->on('data_laboratorium')->onDelete('cascade');
+            $table->foreign('tahun_akademik_id')->references('id')->on('tahun_akademik')->onDelete('cascade');
             $table->foreign('dosen_id')->references('id')->on('data_dosen')->onDelete('cascade');
         });
     }

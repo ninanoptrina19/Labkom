@@ -17,41 +17,41 @@ class JadwalController extends Controller
     public function index(Request $request)
     {
 
-        $tahunAkademikFilter = $request->input('tahun_akademik');
-        $semesterFilter = $request->input('semester');
+        $tahunAkademikFilter = $request->input('tahun_akademik_id');
+        // $semesterFilter = $request->input('semester');
         $prodiFilter = $request->input('prodi');
 
 
         if (auth()->user()->roles == 'admin') {
             $jadwalQuery = DataJadwal::query();
             if ($tahunAkademikFilter) {
-                $jadwalQuery->where('tahun_akademik', $tahunAkademikFilter);
+                $jadwalQuery->where('tahun_akademik_id', $tahunAkademikFilter);
             }
             if ($prodiFilter) {
                 $jadwalQuery->where('prodi', $prodiFilter);
             }
-            if ($semesterFilter) {
-                $jadwalQuery->where('semester', $semesterFilter);
-            }
+            // if ($semesterFilter) {
+            //     $jadwalQuery->where('semester', $semesterFilter);
+            // }
             $jadwal = $jadwalQuery->get();
         } else {
             $jadwalQuery = DataJadwal::where('dosen_id', auth()->user()->dosen->id);
             if ($tahunAkademikFilter) {
-                $jadwalQuery->where('tahun_akademik', $tahunAkademikFilter);
+                $jadwalQuery->where('tahun_akademik_id', $tahunAkademikFilter);
             }
             if ($prodiFilter) {
                 $jadwalQuery->where('prodi', $prodiFilter);
             }
-            if ($semesterFilter) {
-                $jadwalQuery->where('semester', $semesterFilter);
-            }
+            // if ($semesterFilter) {
+            //     $jadwalQuery->where('semester', $semesterFilter);
+            // }
             $jadwal = $jadwalQuery->get();
         }
 
-        $tahun_akademik = DataJadwal::select('tahun_akademik')->distinct()->pluck('tahun_akademik');
+        // $tahun_akademik = DataJadwal::select('tahun_akademik')->distinct()->pluck('tahun_akademik');
         $prodi = DataJadwal::select('prodi')->distinct()->pluck('prodi');
 
-        return view('jadwal.index', compact('jadwal', 'tahun_akademik', 'prodi'));
+        return view('jadwal.index', compact('jadwal', 'prodi','tahun_akademik_id'));
     }
 
     // public function index()
@@ -64,24 +64,22 @@ class JadwalController extends Controller
     {
         $dosens = DataDosen::all();
         $laboratoriums = DataLaboratorium::all();
-        $existingSchedules = DataJadwal::all();
+        $tahun_akademiks = DataJadwal::all();
 
-        return view('jadwal.create', compact('dosens', 'laboratoriums', 'existingSchedules'));
+        return view('jadwal.create', compact('dosens', 'laboratoriums', 'tahun_akademiks'));
     }
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'dosen_id' => 'required',
-            'prodi' => 'required',
-            'penggunaan' => 'required',
-            'laboratorium_id' => 'required',
             'hari' => 'required',
             'jam' => 'required',
-            'semester' => 'required',
-            'angkatan' => 'required',
-            'keterangan' => 'nullable',
-            'tahun_akademik' => 'required',
+            'laboratorium_id' => 'required',
+            'penggunaan/mata_kuliah' => 'required',
+            'dosen_id' => 'required',
+            'prodi' => 'required',
+            'tahun_akademik_id' => 'required',
+            'tanggal' => 'required',
         ], [
             'required' => 'harus diisi',
 
@@ -112,24 +110,23 @@ class JadwalController extends Controller
         $jadwal = DataJadwal::find($id);
         $dosens = DataDosen::all();
         $laboratoriums = DataLaboratorium::all();
+        $tahun_akademiks = DataJadwal::all();
 
-        return view('jadwal.edit', compact('jadwal', 'dosens', 'laboratoriums'));
+        return view('jadwal.edit', compact('jadwal', 'dosens', 'laboratoriums','tahun_akademiks'));
     }
 
     public function update(Request $request, $id)
     {
 
         $validatedData = $request->validate([
-            'dosen_id' => 'required',
-            'prodi' => 'required',
-            'penggunaan' => 'required',
-            'laboratorium_id' => 'required',
             'hari' => 'required',
             'jam' => 'required',
-            'semester' => 'required',
-            'angkatan' => 'required',
-            'keterangan' => 'nullable',
-            'tahun_akademik' => 'required',
+            'laboratorium_id' => 'required',
+            'penggunaan/mata_kuliah' => 'required',
+            'dosen_id' => 'required',
+            'prodi' => 'required',
+            'tahun_akademik_id' => 'required',
+            'tanggal' => 'required',
         ], [
             'required' => 'harus diisi'
         ]);
@@ -161,15 +158,15 @@ class JadwalController extends Controller
     }
     public function cetakPDF(Request $request)
     {
-        $query = DataJadwal::with(['dosen', 'laboratorium']);
+        $query = DataJadwal::with(['dosen', 'laboratorium','tahun_akademik']);
 
-        if ($request->filled('tahun_akademik')) {
-            $query->where('tahun_akademik', $request->tahun_akademik);
+        if ($request->filled('tahun_akademik_id')) {
+            $query->where('tahun_akademik_id', $request->tahun_akademiks);
         }
 
-        if ($request->filled('semester')) {
-            $query->where('semester', $request->semester);
-        }
+        // if ($request->filled('semester')) {
+        //     $query->where('semester', $request->semester);
+        // }
         if ($request->filled('prodi')) {
             $query->where('prodi', $request->prodi);
         }

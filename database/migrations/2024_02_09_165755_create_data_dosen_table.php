@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Menambahkan kolom user_id dan relasi
             $table->string('nama');
             $table->integer('nidn');
-            $table->string('alamat');
+            $table->string('prodi');
+            $table->string('fakultas');
             $table->string('telepon'); // Ubah dari integer ke string untuk menampung nomor telepon dengan lebih fleksibel
             $table->timestamps();
         });

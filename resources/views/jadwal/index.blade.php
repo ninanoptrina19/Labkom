@@ -7,7 +7,7 @@
         <a href="{{ route('data_jadwal.create') }}" class="btn btn-primary mb-3">Tambah Jadwal</a>
 
         @if (Auth::user()->roles == 'admin')
-            <a href="{{ route('hasil.pdf', ['tahun_akademik' => request('tahun_akademik'),'prodi' => request('prodi'), 'semester' => request('semester')]) }}" class="btn btn-primary float-end">Cetak PDF</a>
+            <a href="{{ route('hasil.pdf', ['tahun_akademik' => request('tahun_akademik'),'prodi' => request('prodi'), ]) }}" class="btn btn-primary float-end">Cetak PDF</a>
         @endif
         
         <form id="filterForm" action="{{ route('data_jadwal.index') }}" method="GET">
@@ -23,7 +23,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-4">
+                {{-- <div class="col-md-4">
                     <div class="mb-3">
                         <label for="semester" class="form-label">Filter berdasarkan Semester:</label>
                         <select class="form-select" name="semester" id="semester" onchange="this.form.submit()">
@@ -32,7 +32,7 @@
                             <option value="ganjil" @if(request('semester') == 'ganjil') selected @endif>Ganjil</option>
                         </select>
                     </div>
-                </div>
+                </div> --}}
                 <div class="col-md-4">
                     <div class="mb-3">
                         <label for="prodi" class="form-label">Filter berdasarkan Prodi:</label>
@@ -58,16 +58,15 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Dosen</th>
-                            <th scope="col">Prodi</th>
-                            <th scope="col">penggunaan</th>
-                            <th scope="col">Laboratorium</th>
                             <th scope="col">Hari</th>
                             <th scope="col">Jam</th>
-                            <th scope="col">Semester</th>
-                            <th scope="col">Tahun Akademik</th>
-                            <th scope="col">Angkatan</th>
-                            <th scope="col">Keterangan</th>
+                            <th scope="col">Laboratorium</th>
+                            <th scope="col">penggunaan/mata_kuliah</th>
+                            <th scope="col">Dosen</th>
+                            <th scope="col">Prodi</th>
+                            <th scope="col">Tahun Akdemik</th>
+                            <th scope="col">Tanggal_Mulai</th>
+                            <th scope="col">Tanggal_Selesai</th>
                             @if (Auth::user()->roles == 'admin')
                             <th scope="col">Aksi</th>
                             @endif
@@ -76,16 +75,15 @@
                     <tbody>
                         @foreach ($jadwal as $schedule)
                             <tr>
-                                <td>{{ $schedule->dosen->nama }}</td>
-                                <td>{{ $schedule->prodi }}</td>
-                                <td>{{ $schedule->penggunaan }}</td>
-                                <td>{{ $schedule->laboratorium->nama }}</td>
                                 <td>{{ $schedule->hari }}</td>
                                 <td>{{ $schedule->jam }}</td>
-                                <td>{{ $schedule->semester }}</td>
+                                <td>{{ $schedule->laboratorium->nama }}</td>
+                                <td>{{ $schedule->penggunaan }}</td>
+                                <td>{{ $schedule->dosen->nama }}</td>
+                                <td>{{ $schedule->prodi }}</td>
                                 <td>{{ $schedule->tahun_akademik }}</td>
-                                <td>{{ $schedule->angkatan }}</td>
-                                <td>{{ $schedule->keterangan }}</td>
+                                <td>{{ $schedule->tanggal_mulai }}</td>
+                                <td>{{ $schedule->tanggal_berakhir }}</td>
                                 @if (Auth::user()->roles == 'admin')
                                     <td>
                                         <div class="d-flex gap-2">

@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('data_hasil', function (Blueprint $table) {
             $table->id(); 
-            $table->unsignedBigInteger('dosen_id');
-            $table->string('prodi');
-            $table->string('mata_kuliah');
-            $table->unsignedBigInteger('laboratorium_id');
             $table->string('hari');
             $table->integer('jam');
-            $table->string('semester');
-            $table->string('angkatan');
+            $table->unsignedBigInteger('laboratorium_id');
+            $table->string('mata_kuliah/penggunaan');
+            $table->unsignedBigInteger('dosen_id');
+            $table->string('prodi');
             $table->date('tanggal');
             $table->string('keterangan');
             $table->timestamps();
