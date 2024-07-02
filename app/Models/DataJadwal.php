@@ -16,11 +16,13 @@ class DataJadwal extends Model
         'hari',
         'jam',
         'laboratorium_id',
-        'penggunaan/mata_kuliah',
+        'penggunaan',
+        'mata_kuliah',
         'dosen_id',
         'prodi',
         'tahun_akademik_id',
-        'tanggal',  // Mengubah semester menjadi enu
+        'tanggal_mulai',
+        'tanggal_selesai',
     ];
     public function dosen()
     {
@@ -35,4 +37,5 @@ class DataJadwal extends Model
     {
         return  $this->belongsTo(TahunAkademik::class);
     }
+
 }

@@ -30,12 +30,12 @@
                 <th>No</th>
                 <th>Dosen</th>
                 <th>Prodi</th>
-                <th>Penggunaan</th>
+                <th>Penggunaan/Mata kuliah</th>
                 <th>Laboratorium</th>
                 <th>Hari</th>
                 <th>Jam</th>
-                <th>Semester</th>
-                <th>Angkatan</th>
+                <th>Tanggal Mulai</th>
+                <th>Tanggal Selesai</th>
                 <th>Tahun Akademik</th>
                 <th>Keterangan</th>
             </tr>
@@ -50,9 +50,9 @@
                     <td>{{ $data->laboratorium->nama }}</td>
                     <td>{{ $data->hari }}</td>
                     <td>{{ $data->jam }}</td>
-                    <td>{{ $data->semester }}</td>
-                    <td>{{ $data->angkatan }}</td>
-                    <td>{{ $data->tahun_akademik }}</td>
+                    <td>{{ $data->tanggal_mulai }}</td>
+                    <td>{{ $data->tanggal_selesai }}</td>
+                    <td>{{ $data->tahunAkademik->nama }}</td>
                     <td>{{ $data->keterangan }}</td>
                 </tr>
             @endforeach

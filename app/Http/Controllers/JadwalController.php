@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\DataJadwal;
 use App\Models\DataDosen;
 use App\Models\DataLaboratorium;
+use App\Models\TahunAkademik;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\View;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -15,138 +16,158 @@ class JadwalController extends Controller
 {
 
     public function index(Request $request)
-    {
+{
+    $tahunAkademikFilter = $request->input('tahun_akademik_id');
+    $prodiFilter = $request->input('prodi');
 
-        $tahunAkademikFilter = $request->input('tahun_akademik_id');
-        // $semesterFilter = $request->input('semester');
-        $prodiFilter = $request->input('prodi');
+    // Query data jadwal
+    $jadwalQuery = DataJadwal::query();
 
-
-        if (auth()->user()->roles == 'admin') {
-            $jadwalQuery = DataJadwal::query();
-            if ($tahunAkademikFilter) {
-                $jadwalQuery->where('tahun_akademik_id', $tahunAkademikFilter);
-            }
-            if ($prodiFilter) {
-                $jadwalQuery->where('prodi', $prodiFilter);
-            }
-            // if ($semesterFilter) {
-            //     $jadwalQuery->where('semester', $semesterFilter);
-            // }
-            $jadwal = $jadwalQuery->get();
-        } else {
-            $jadwalQuery = DataJadwal::where('dosen_id', auth()->user()->dosen->id);
-            if ($tahunAkademikFilter) {
-                $jadwalQuery->where('tahun_akademik_id', $tahunAkademikFilter);
-            }
-            if ($prodiFilter) {
-                $jadwalQuery->where('prodi', $prodiFilter);
-            }
-            // if ($semesterFilter) {
-            //     $jadwalQuery->where('semester', $semesterFilter);
-            // }
-            $jadwal = $jadwalQuery->get();
+    // Filter berdasarkan peran pengguna
+    if (auth()->user()->roles == 'admin') {
+        if ($tahunAkademikFilter) {
+            $jadwalQuery->where('tahun_akademik_id', $tahunAkademikFilter);
         }
-
-        // $tahun_akademik = DataJadwal::select('tahun_akademik')->distinct()->pluck('tahun_akademik');
-        $prodi = DataJadwal::select('prodi')->distinct()->pluck('prodi');
-
-        return view('jadwal.index', compact('jadwal', 'prodi','tahun_akademik_id'));
+        if ($prodiFilter) {
+            $jadwalQuery->where('prodi', $prodiFilter);
+        }
+        $jadwal = $jadwalQuery->get();
+    } else {
+        // Jika pengguna bukan admin (dosen)
+        $jadwalQuery->where('dosen_id', auth()->user()->dosen->id);
+        if ($tahunAkademikFilter) {
+            $jadwalQuery->where('tahun_akademik_id', $tahunAkademikFilter);
+        }
+        if ($prodiFilter) {
+            $jadwalQuery->where('prodi', $prodiFilter);
+        }
+        $jadwal = $jadwalQuery->get();
     }
 
-    // public function index()
-    // {
-    //     $jadwal = DataJadwal::all();
-    //     return view('jadwal.index', compact('jadwal'));
-    // }
+    // Ambil data tahun akademik untuk dropdown filter
+    $tahun_akademik = TahunAkademik::all();
+
+    // Ambil data program studi untuk dropdown filter
+    $prodi = DataJadwal::select('prodi')->distinct()->pluck('prodi');
+
+    return view('jadwal.index', compact('jadwal', 'prodi', 'tahun_akademik'));
+}
+
 
     public function create()
     {
         $dosens = DataDosen::all();
         $laboratoriums = DataLaboratorium::all();
-        $tahun_akademiks = DataJadwal::all();
+        $tahun_akademiks = TahunAkademik::all();
+        
 
         return view('jadwal.create', compact('dosens', 'laboratoriums', 'tahun_akademiks'));
     }
 
     public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'hari' => 'required',
-            'jam' => 'required',
-            'laboratorium_id' => 'required',
-            'penggunaan/mata_kuliah' => 'required',
-            'dosen_id' => 'required',
-            'prodi' => 'required',
-            'tahun_akademik_id' => 'required',
-            'tanggal' => 'required',
-        ], [
-            'required' => 'harus diisi',
+{
+    // Validasi input
+    $request->validate([
+        'hari' => 'required',
+        'jam' => 'required',
+        'laboratorium_id' => 'required',
+        'penggunaan' => 'required',
+        'dosen_id' => 'required',
+        'prodi' => 'required',
+        'tahun_akademik_id' => 'required',
+        'tanggal_mulai' => 'required|date',
+        'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+    ],[
+        'required' => 'kolom :attribute harus diisi',
 
-        ]);
+    ]);
 
-        try {
-            $existingSchedule = DataJadwal::where('laboratorium_id', $request->laboratorium_id)
-                ->where('hari', $request->hari)
-                ->where('jam', $request->jam)
-                ->exists();
+    // Ambil input dari form
+    $input = $request->all();
 
-            if ($existingSchedule) {
-                return redirect()->back()->withErrors(['Jadwal bentrok dengan jadwal lain.'])->withInput();
-            }
+    $conflictingSchedule = DataJadwal::where(function ($query) use ($input) {
+        $query->where('hari', $input['hari'])
+              ->where('laboratorium_id', $input['laboratorium_id'])
+              ->where(function ($query) use ($input) {
+                  $query->whereBetween('tanggal_mulai', [$input['tanggal_mulai'], $input['tanggal_selesai']])
+                        ->orWhereBetween('tanggal_selesai', [$input['tanggal_mulai'], $input['tanggal_selesai']])
+                        ->orWhere(function ($query) use ($input) {
+                            $query->where('tanggal_mulai', '<=', $input['tanggal_mulai'])
+                                  ->where('tanggal_selesai', '>=', $input['tanggal_selesai']);
+                        });
+              });
+    })->exists();
 
-            // Simpan data
-            DataJadwal::create($validatedData);
-
-            return redirect()->route('data_jadwal.index')->with('success', 'Data Jadwal berhasil ditambahkan!');
-        } catch (Exception $e) {
-            return redirect()->back()->withErrors(['Terjadi kesalahan saat menyimpan data: ' . $e->getMessage()])->withInput();
-        }
+    if ($conflictingSchedule) {
+        return redirect()->back()->withInput()->withErrors(['conflict' => 'Jadwal yang Anda masukkan bertabrakan dengan jadwal yang sudah ada. Silakan pilih hari, laboratorium, jam, atau tanggal yang berbeda.']);
     }
+
+    DataJadwal::create($input);
+
+    // Redirect dengan pesan sukses
+    return redirect()->route('data_jadwal.index')->with('success', 'Jadwal berhasil ditambahkan.');
+}
+
 
 
     public function edit($id)
     {
-        $jadwal = DataJadwal::find($id);
+        $data_jadwal = DataJadwal::find($id);
         $dosens = DataDosen::all();
         $laboratoriums = DataLaboratorium::all();
-        $tahun_akademiks = DataJadwal::all();
+        $tahun_akademiks = TahunAkademik::all();
 
-        return view('jadwal.edit', compact('jadwal', 'dosens', 'laboratoriums','tahun_akademiks'));
+        return view('jadwal.edit', compact('data_jadwal', 'dosens', 'laboratoriums','tahun_akademiks'));
     }
 
     public function update(Request $request, $id)
-    {
+{
+    // Validasi input
+    $request->validate([
+        'hari' => 'required',
+        'jam' => 'required',
+        'laboratorium_id' => 'required',
+        'penggunaan' => 'required',
+        'dosen_id' => 'required',
+        'prodi' => 'required',
+        'tahun_akademik_id' => 'required',
+        'tanggal_mulai' => 'required|date',
+        'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+    ],[
+        'required' => 'Kolom :attribute harus diisi.',
+        'after_or_equal' => 'Tanggal selesai harus setelah atau sama dengan tanggal mulai.',
+    ]);
 
-        $validatedData = $request->validate([
-            'hari' => 'required',
-            'jam' => 'required',
-            'laboratorium_id' => 'required',
-            'penggunaan/mata_kuliah' => 'required',
-            'dosen_id' => 'required',
-            'prodi' => 'required',
-            'tahun_akademik_id' => 'required',
-            'tanggal' => 'required',
-        ], [
-            'required' => 'harus diisi'
-        ]);
-        $existingSchedule = DataJadwal::where('laboratorium_id', $request->laboratorium_id)
-            ->where('hari', $request->hari)
-            ->where('jam', $request->jam)
-            ->exists();
+    // Ambil input dari form
+    $input = $request->all();
 
-        if ($existingSchedule) {
-            return redirect()->back()->withErrors(['Jadwal bentrok dengan jadwal lain.'])->withInput();
-        }
-        // Temukan data berdasarkan ID
-        $dataJadwal = DataJadwal::find($id);
-        // Perbarui data dengan data yang validasi
+    // Cek jadwal yang bertabrakan kecuali untuk jadwal dengan ID yang sedang diedit
+    $conflictingSchedule = DataJadwal::where(function ($query) use ($input, $id) {
+        $query->where('id', '<>', $id)
+              ->where('hari', $input['hari'])
+              ->where('laboratorium_id', $input['laboratorium_id'])
+              ->where(function ($query) use ($input) {
+                  $query->whereBetween('tanggal_mulai', [$input['tanggal_mulai'], $input['tanggal_selesai']])
+                        ->orWhereBetween('tanggal_selesai', [$input['tanggal_mulai'], $input['tanggal_selesai']])
+                        ->orWhere(function ($query) use ($input) {
+                            $query->where('tanggal_mulai', '<=', $input['tanggal_mulai'])
+                                  ->where('tanggal_selesai', '>=', $input['tanggal_selesai']);
+                        });
+              });
+    })->exists();
 
-        $dataJadwal->update($validatedData);
-
-        // Redirect dengan pesan sukses
-        return redirect()->route('data_jadwal.index')->with('success', 'Data Jadwal berhasil diperbarui!');
+    if ($conflictingSchedule) {
+        return redirect()->back()->withInput()->withErrors(['conflict' => 'Jadwal yang Anda masukkan bertabrakan dengan jadwal yang sudah ada. Silakan pilih hari, laboratorium, jam, atau tanggal yang berbeda.']);
     }
+
+    // Update data jadwal
+    $data_jadwal = DataJadwal::findOrFail($id);
+    $data_jadwal->update($input);
+
+    // Redirect dengan pesan sukses
+    return redirect()->route('data_jadwal.index')->with('success', 'Jadwal berhasil diperbarui.');
+}
+
 
     public function destroy($id)
     {
@@ -158,15 +179,12 @@ class JadwalController extends Controller
     }
     public function cetakPDF(Request $request)
     {
-        $query = DataJadwal::with(['dosen', 'laboratorium','tahun_akademik']);
+        $query = DataJadwal::with(['dosen', 'laboratorium','tahunAkademik']);
+
 
         if ($request->filled('tahun_akademik_id')) {
             $query->where('tahun_akademik_id', $request->tahun_akademiks);
         }
-
-        // if ($request->filled('semester')) {
-        //     $query->where('semester', $request->semester);
-        // }
         if ($request->filled('prodi')) {
             $query->where('prodi', $request->prodi);
         }
@@ -176,4 +194,17 @@ class JadwalController extends Controller
 
         return $pdf->download('hasil_penjadwalan.pdf');
     }
+
+    public function checkJam(Request $request)
+{
+    $selectedHari = $request->input('hari');
+    $selectedLaboratorium = $request->input('laboratorium_id');
+
+    // Query ke database untuk mendapatkan jam yang sudah terisi
+    $jadwalTerisi = DataJadwal::where('hari', $selectedHari)
+                               ->where('laboratorium_id', $selectedLaboratorium)
+                               ->pluck('jam');
+
+    return response()->json($jadwalTerisi);
+}
 }

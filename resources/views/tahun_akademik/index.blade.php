@@ -12,29 +12,33 @@
             </div>
         @endif
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($tahun_akademik as $item)
-                <tr>
-                    <td>{{$loop->iteration}}</td>
-                    <td>{{ $item->nama }}</td>
-                    <td>
-                        <div class="d-flex gap-2">
-                        <a href="{{ route('data_jadwal.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $item->id }}">Hapus</button>
-                        </div>
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
+       <div class="card shadow border-0">
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Nama</th>
+                        <th scope="col">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($tahun_akademik as $item)
+                    <tr>
+                        <td>{{$loop->iteration}}</td>
+                        <td>{{ $item->nama }}</td>
+                        <td>
+                            <div class="d-flex gap-2">
+                            <a href="{{ route('tahun_akademik.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $item->id }}">Hapus</button>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+       </div>
     </div>
 
     <!-- Modal Konfirmasi Hapus -->

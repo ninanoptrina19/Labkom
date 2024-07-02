@@ -34,8 +34,6 @@ class TahunAkademikController extends Controller
     public function edit($id)
     {
         $tahun_akademik = TahunAkademik::find($id);
-
-
         return view('tahun_akademik.edit', compact('tahun_akademik'));
     }
 

@@ -7,7 +7,7 @@
         <a href="{{ route('data_jadwal.create') }}" class="btn btn-primary mb-3">Tambah Jadwal</a>
 
         @if (Auth::user()->roles == 'admin')
-            <a href="{{ route('hasil.pdf', ['tahun_akademik' => request('tahun_akademik'),'prodi' => request('prodi'), ]) }}" class="btn btn-primary float-end">Cetak PDF</a>
+            <a href="{{ route('hasil.pdf', ['tahun_akademik' => request('tahun_akademik'), 'prodi' => request('prodi')]) }}" class="btn btn-primary float-end">Cetak PDF</a>
         @endif
         
         <form id="filterForm" action="{{ route('data_jadwal.index') }}" method="GET">
@@ -15,31 +15,21 @@
                 <div class="col-md-4">
                     <div class="mb-3">
                         <label for="tahun_akademik" class="form-label">Filter berdasarkan Tahun Akademik:</label>
-                        <select class="form-select" name="tahun_akademik" id="tahun_akademik" onchange="this.form.submit()">
+                        <select class="form-select" name="tahun_akademik_id" id="tahun_akademik" onchange="this.form.submit()">
                             <option value="">Pilih Tahun Akademik</option>
                             @foreach ($tahun_akademik as $item)
-                                <option value="{{ $item }}" @if(request('tahun_akademik') == $item) selected @endif>{{ $item }}</option>
+                                <option value="{{ $item->id }}" @if(request('tahun_akademik_id') == $item->id) selected @endif>{{ $item->nama }}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
-                {{-- <div class="col-md-4">
-                    <div class="mb-3">
-                        <label for="semester" class="form-label">Filter berdasarkan Semester:</label>
-                        <select class="form-select" name="semester" id="semester" onchange="this.form.submit()">
-                            <option value="">Pilih Semester</option>
-                            <option value="genap" @if(request('semester') == 'genap') selected @endif>Genap</option>
-                            <option value="ganjil" @if(request('semester') == 'ganjil') selected @endif>Ganjil</option>
-                        </select>
-                    </div>
-                </div> --}}
                 <div class="col-md-4">
                     <div class="mb-3">
                         <label for="prodi" class="form-label">Filter berdasarkan Prodi:</label>
                         <select class="form-select" name="prodi" id="prodi" onchange="this.form.submit()">
                             <option value="">Pilih Prodi</option>
-                            @foreach ($prodi as $item)
-                                <option value="{{ $item }}" @if(request('prodi') == $item) selected @endif>{{ $item }}</option>
+                            @foreach ($prodi as $prodi_option)
+                                <option value="{{ $prodi_option }}" @if(request('prodi') == $prodi_option) selected @endif>{{ $prodi_option }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -61,14 +51,14 @@
                             <th scope="col">Hari</th>
                             <th scope="col">Jam</th>
                             <th scope="col">Laboratorium</th>
-                            <th scope="col">penggunaan/mata_kuliah</th>
+                            <th scope="col">Penggunaan/Mata Kuliah</th>
                             <th scope="col">Dosen</th>
                             <th scope="col">Prodi</th>
-                            <th scope="col">Tahun Akdemik</th>
-                            <th scope="col">Tanggal_Mulai</th>
-                            <th scope="col">Tanggal_Selesai</th>
+                            <th scope="col">Tahun Akademik</th>
+                            <th scope="col">Tanggal Mulai</th>
+                            <th scope="col">Tanggal Selesai</th>
                             @if (Auth::user()->roles == 'admin')
-                            <th scope="col">Aksi</th>
+                                <th scope="col">Aksi</th>
                             @endif
                         </tr>
                     </thead>
@@ -81,14 +71,14 @@
                                 <td>{{ $schedule->penggunaan }}</td>
                                 <td>{{ $schedule->dosen->nama }}</td>
                                 <td>{{ $schedule->prodi }}</td>
-                                <td>{{ $schedule->tahun_akademik }}</td>
+                                <td>{{ $schedule->tahunAkademik->nama }}</td>
                                 <td>{{ $schedule->tanggal_mulai }}</td>
-                                <td>{{ $schedule->tanggal_berakhir }}</td>
+                                <td>{{ $schedule->tanggal_selesai }}</td>
                                 @if (Auth::user()->roles == 'admin')
                                     <td>
                                         <div class="d-flex gap-2">
-                                        <a href="{{ route('data_jadwal.edit', $schedule->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $schedule->id }}">Hapus</button>
+                                            <a href="{{ route('data_jadwal.edit', $schedule->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ $schedule->id }}">Hapus</button>
                                         </div>
                                     </td>
                                 @endif

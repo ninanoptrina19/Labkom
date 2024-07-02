@@ -11,64 +11,77 @@
                 </ul>
             </div><br />
         @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <h1>Tambah Jadwal</h1>
 
         <form action="{{ route('data_jadwal.store') }}" method="POST">
             @csrf
-            @php
-                // Mengelompokkan jadwal yang sudah ada berdasarkan hari
-                $jadwalTerisi = $existingSchedules->groupBy('hari')->map(function($day) {
-                    return $day->pluck('jam')->toArray();
-                })->toArray();
-            @endphp
 
             <div class="form-group">
                 <label for="hari">Hari:</label>
                 <select name="hari" id="hari" class="form-control" required>
                     <option value="">Pilih Hari</option>
                     @foreach(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'] as $hari)
-                        <option value="{{ $hari }}">{{ $hari }}</option>
+                        <option value="{{ $hari }}" {{ old('hari') == $hari ? 'selected' : '' }}>{{ $hari }}</option>
                     @endforeach
                 </select>
             </div>
+              <div class="form-group">
+                <label for="laboratorium_id">Laboratorium:</label>
+                <select name="laboratorium_id" class="form-control" required>
+                    <option value="">Pilih Laboratorium</option>
+                    @foreach($laboratoriums as $laboratorium)
+                        <option value="{{ $laboratorium->id }}" {{ old('laboratorium_id') == $laboratorium->id ? 'selected' : '' }}>{{ $laboratorium->nama }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tanggal_mulai">Tanggal Mulai:</label>
+                <input type="date" name="tanggal_mulai" class="form-control" value="{{ old('tanggal_mulai') }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tanggal_selesai">Tanggal Selesai:</label>
+                <input type="date" name="tanggal_selesai" class="form-control" value="{{ old('tanggal_selesai') }}" required>
+            </div>
+        
 
             <div class="form-group">
                 <label for="jam">Jam:</label>
                 <select name="jam" id="jam" class="form-control" required>
                     <option value="">Pilih Jam</option>
                     @foreach(['07:00-08:40', '08:45-10:25', '10:30-12:00', '13:30-14:40', '14:45-16:25', '16:30-18:10'] as $jam)
-                    <option value="{{ $jam }}">{{ $jam }}</option>
+                        <option value="{{ $jam }}">{{ $jam }}</option>
                     @endforeach
                 </select>
+                
             </div>
             
-            <div class="form-group">
-                <label for="laboratorium">Laboratorium:</label>
-                <select name="laboratorium_id" class="form-control" required>
-                    <option value="">Pilih Laboratorium</option>
-                    @foreach($laboratoriums as $laboratorium)
-                        <option value="{{ $laboratorium->id }}">{{ $laboratorium->nama }}</option>
-                    @endforeach
-                </select>
-            </div>
+          
             
             <div class="form-group">
-                <label for="penggunaan/mata_kuliah"> Penggunaan/Mata_Kuliah:</label>
-                <input type="text" name="penggunaan/mata_kuliah" class="form-control" required>
+                <label for="penggunaan">Penggunaan/Mata Kuliah:</label>
+                <input type="text" name="penggunaan" class="form-control" value="{{ old('penggunaan') }}" required>
             </div>
 
             <div class="form-group">
-                <label for="dosen">Dosen:</label>
+                <label for="dosen_id">Dosen:</label>
                 @if (Auth::user()->roles == 'admin')
-                <select name="dosen_id" class="form-control" required>
-                    <option value="">Pilih Dosen</option>
-                    @foreach($dosens as $dosen)
-                        <option value="{{ $dosen->id }}">{{ $dosen->nama }}</option>
-                    @endforeach
-                </select>
+                    <select name="dosen_id" class="form-control" required>
+                        <option value="">Pilih Dosen</option>
+                        @foreach($dosens as $dosen)
+                            <option value="{{ $dosen->id }}" {{ old('dosen_id') == $dosen->id ? 'selected' : '' }}>{{ $dosen->nama }}</option>
+                        @endforeach
+                    </select>
                 @else
-                <input type="text" name="" class="form-control" value="{{ Auth::user()->name }}" id="" disabled>
-                <input type="hidden" name="dosen_id" value="{{ Auth::user()->dosen->id }}" id="">
+                    <input type="text" name="nama_dosen" class="form-control" value="{{ Auth::user()->name }}" disabled>
+                    <input type="hidden" name="dosen_id" value="{{ Auth::user()->dosen->id }}">
                 @endif
             </div>
             
@@ -76,25 +89,25 @@
                 <label for="prodi">Prodi:</label>
                 <select name="prodi" class="form-control" required>
                     <option value="">Pilih Prodi</option>
-                    <option value="DIII Kebidanan">DIII Kebidanan</option>
-                    <option value="S1 Kebidanan">S1 Kebidanan</option>
-                    <option value="S1 Gizi">S1 Gizi</option>
-                    <option value="S1 Farmasi">S1 Farmasi</option>
-                    <option value="S1 Administrasi Rumah Sakit">S1 Administrasi Rumah Sakit</option>
-                    <option value="S1 Keperawatan">S1 Keperawatan</option>
-                    <option value="NERS">NERS</option>
-                    <option value="S1 Pendidian Guru SD">S1 Pendidian Guru SD</option>
-                    <option value="S1 Pendidikan Matematika">S1 Pendidikan Matematika</option>
-                    <option value="S1 Pendidikan Guru MI">S1 Pendidikan Guru MI</option>
-                    <option value="S1 Pendidikan Agama Islam">S1 Pendidikan Agama Islam</option>
-                    <option value="S1 Sistem Informasi">S1 Sistem Informasi</option>
-                    <option value="S1 Informatika">S1 Informatika</option>
-                    <option value="S1 Manajemen">S1 Manajemen</option>
-                    <option value="S1 Akuntansi">S1 Akuntansi</option>
-                    <option value="S1 Ekonomi Syariah">S1 Ekonomi Syariah</option>
-                    <option value="S1 Perbankan Syariah">S1 Perbankan Syariah</option>
-                    <option value="S2 Kesehatan Masyarakat">S2 Kesehatan Masyarakat</option>
-                    <option value="S2 Pendidikan Agama Islam">S2 Pendidikan Agama Islam</option>
+                    <option value="DIII Kebidanan" {{ old('prodi') == 'DIII Kebidanan' ? 'selected' : '' }}>DIII Kebidanan</option>
+                    <option value="S1 Kebidanan" {{ old('prodi') == 'S1 Kebidanan' ? 'selected' : '' }}>S1 Kebidanan</option>
+                    <option value="S1 Gizi" {{ old('prodi') == 'S1 Gizi' ? 'selected' : '' }}>S1 Gizi</option>
+                    <option value="S1 Farmasi" {{ old('prodi') == 'S1 Farmasi' ? 'selected' : '' }}>S1 Farmasi</option>
+                    <option value="S1 Administrasi Rumah Sakit" {{ old('prodi') == 'S1 Administrasi Rumah Sakit' ? 'selected' : '' }}>S1 Administrasi Rumah Sakit</option>
+                    <option value="S1 Keperawatan" {{ old('prodi') == 'S1 Keperawatan' ? 'selected' : '' }}>S1 Keperawatan</option>
+                    <option value="NERS" {{ old('prodi') == 'NERS' ? 'selected' : '' }}>NERS</option>
+                    <option value="S1 Pendidian Guru SD" {{ old('prodi') == 'S1 Pendidian Guru SD' ? 'selected' : '' }}>S1 Pendidian Guru SD</option>
+                    <option value="S1 Pendidikan Matematika" {{ old('prodi') == 'S1 Pendidikan Matematika' ? 'selected' : '' }}>S1 Pendidikan Matematika</option>
+                    <option value="S1 Pendidikan Guru MI" {{ old('prodi') == 'S1 Pendidikan Guru MI' ? 'selected' : '' }}>S1 Pendidikan Guru MI</option>
+                    <option value="S1 Pendidikan Agama Islam" {{ old('prodi') == 'S1 Pendidikan Agama Islam' ? 'selected' : '' }}>S1 Pendidikan Agama Islam</option>
+                    <option value="S1 Sistem Informasi" {{ old('prodi') == 'S1 Sistem Informasi' ? 'selected' : '' }}>S1 Sistem Informasi</option>
+                    <option value="S1 Informatika" {{ old('prodi') == 'S1 Informatika' ? 'selected' : '' }}>S1 Informatika</option>
+                    <option value="S1 Manajemen" {{ old('prodi') == 'S1 Manajemen' ? 'selected' : '' }}>S1 Manajemen</option>
+                    <option value="S1 Akuntansi" {{ old('prodi') == 'S1 Akuntansi' ? 'selected' : '' }}>S1 Akuntansi</option>
+                    <option value="S1 Ekonomi Syariah" {{ old('prodi') == 'S1 Ekonomi Syariah' ? 'selected' : '' }}>S1 Ekonomi Syariah</option>
+                    <option value="S1 Perbankan Syariah" {{ old('prodi') == 'S1 Perbankan Syariah' ? 'selected' : '' }}>S1 Perbankan Syariah</option>
+                    <option value="S2 Kesehatan Masyarakat" {{ old('prodi') == 'S2 Kesehatan Masyarakat' ? 'selected' : '' }}>S2 Kesehatan Masyarakat</option>
+                    <option value="S2 Pendidikan Agama Islam" {{ old('prodi') == 'S2 Pendidikan Agama Islam' ? 'selected' : '' }}>S2 Pendidikan Agama Islam</option>
                 </select>
             </div>
 
@@ -103,63 +116,14 @@
                 <select name="tahun_akademik_id" class="form-control" required>
                     <option value="">Pilih Tahun Akademik</option>
                     @foreach($tahun_akademiks as $tahun_akademik)
-                        <option value="{{ $tahun_akademik->id }}">{{ $tahun_akaddemik->nama }}</option>
+                        <option value="{{ $tahun_akademik->id }}" {{ old('tahun_akademik_id') == $tahun_akademik->id ? 'selected' : '' }}>{{ $tahun_akademik->nama }}</option>
                     @endforeach
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="tanggal_mulai">Tanggal Mulai:</label>
-                <input type="date" name="tanggal_mulai" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-                <label for="tanggal_berakhir">Tanggal Berakhir:</label>
-                <input type="date" name="tanggal_berakhir" class="form-control" required>
-            </div>
-        
-            <br></br>
+           
             <button type="submit" class="btn btn-primary">Simpan</button>
             <a href="{{ url('/jadwal') }}" class="btn btn-secondary">Batal</a>
         </form>
     </div>
-
-    <style>
-        /* Gaya untuk opsi yang di-disable */
-        select option:disabled {
-            background-color: #8c8d8f; /* Warna abu-abu */
-            color: #f3f3f3; /* Warna teks abu-abu */
-        }
-    </style>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const jadwalTerisi = @json($jadwalTerisi);
-
-            document.getElementById('hari').addEventListener('change', function() {
-                const selectedHari = this.value;
-                const jamSelect = document.getElementById('jam');
-
-                // Hapus semua opsi
-                while (jamSelect.options.length > 1) {
-                    jamSelect.remove(1);
-                }
-
-                // Tambahkan opsi jam, termasuk yang sudah terisi
-                const jamOptions = ['07:00-08:40', '08:45-10:25', '10:30-12:00', '13:30-14:40', '14:45-16:25', '16:30-18:10'];
-                jamOptions.forEach(jam => {
-                    const option = document.createElement('option');
-                    option.value = jam;
-                    option.text = jam;
-
-                    if (jadwalTerisi[selectedHari] && jadwalTerisi[selectedHari].includes(jam)) {
-                        option.disabled = true;
-                        option.text += ' (sudah terisi)';
-                    }
-
-                    jamSelect.add(option);
-                });
-            });
-        });
-    </script>
 @endsection

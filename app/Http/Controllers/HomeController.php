@@ -27,8 +27,9 @@ class HomeController extends Controller
     {
         $jadwalCount = DataJadwal::count();
         $jadwal = DataJadwal::all();
+        $jadwalDosen = DataJadwal::where('dosen_id', auth()->user()->dosen->id)->get();
         $laboratorium = DataLaboratorium::count();
         $dosenCount = DataDosen::count();
-        return view('home', compact ('dosenCount', 'laboratorium','jadwal','jadwalCount'));
+        return view('home', compact ('dosenCount', 'laboratorium','jadwal','jadwalCount','jadwalDosen'));
     }
 }
