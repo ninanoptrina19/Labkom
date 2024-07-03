@@ -100,11 +100,10 @@
                             <th scope="col">tanggal mulai</th>
                             <th scope="col">tanggal selesai</th>
                             <th scope="col">Tahun Akademik</th>
-                            <th scope="col">Angkatan</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($jadwalDosen as $jadwal)
+                        @foreach ($jadwal as $jadwal)
                             <tr>
                                 <td>{{ $jadwal->dosen->nama }}</td>
                                 <td>{{ $jadwal->prodi }}</td>
@@ -122,6 +121,7 @@
                 </table>
             </div>
 
+            @if (auth()->user()->roles == 'dosen')
             <div id="jadwalTableDosen" class="mt-3"  style="display: none;">
                 <h2>Jadwal Saya</h2>
                 <table class="table">
@@ -133,9 +133,9 @@
                             <th scope="col">Laboratorium</th>
                             <th scope="col">Hari</th>
                             <th scope="col">Jam</th>
-                            <th scope="col">Semester</th>
+                            <th scope="col">tanggal mulai</th>
+                            <th scope="col">tanggal selesai</th>
                             <th scope="col">Tahun Akademik</th>
-                            <th scope="col">Angkatan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -148,17 +148,17 @@
                                 <td>{{ $jadwal->hari }}</td>
                                 <td>{{ $jadwal->jam }}</td>
                                 <td>{{ $jadwal->tanggal_mulai }}</td>
-                            <td>{{ $jadwal->tanggal_selesai }}</td>
+                                <td>{{ $jadwal->tanggal_selesai }}</td>
                                 <td>{{ $jadwal->tahunAkademik->nama }}</td>
-                                <td>{{ $jadwal->angkatan }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
+            @endif
         </div>
 
-        .
+        
     </div>
 
     <script>

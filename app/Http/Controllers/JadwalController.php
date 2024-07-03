@@ -47,8 +47,12 @@ class JadwalController extends Controller
     // Ambil data tahun akademik untuk dropdown filter
     $tahun_akademik = TahunAkademik::all();
 
-    // Ambil data program studi untuk dropdown filter
-    $prodi = DataJadwal::select('prodi')->distinct()->pluck('prodi');
+    $prodi = [
+        'DIII Kebidanan', 'S1 Kebidanan', 'S1 Gizi', 'S1 Farmasi', 'S1 Administrasi Rumah Sakit',
+        'S1 Keperawatan', 'NERS', 'S1 Pendidian Guru SD', 'S1 Pendidikan Matematika', 'S1 Pendidikan Guru MI',
+        'S1 Pendidikan Agama Islam', 'S1 Sistem Informasi', 'S1 Informatika', 'S1 Manajemen', 'S1 Akuntansi',
+        'S1 Ekonomi Syariah', 'S1 Perbankan Syariah', 'S2 Kesehatan Masyarakat', 'S2 Pendidikan Agama Islam'
+    ];
 
     return view('jadwal.index', compact('jadwal', 'prodi', 'tahun_akademik'));
 }

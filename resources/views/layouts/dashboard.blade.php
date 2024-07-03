@@ -121,7 +121,7 @@
                   <li class="menu-item {{ request()->is('tahun_akademik') ? 'active' : '' }}">
                   <a href="{{ url('/tahun_akademik') }}" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-layout"></i>
-                    <div data-i18n="Analytics">Tahun_Akademik</div>
+                    <div data-i18n="Analytics">Tahun akademik</div>
                   </a>
                 </li>
             @endif

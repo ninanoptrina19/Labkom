@@ -25,11 +25,18 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         $jadwalCount = DataJadwal::count();
         $jadwal = DataJadwal::all();
-        $jadwalDosen = DataJadwal::where('dosen_id', auth()->user()->dosen->id)->get();
+       
         $laboratorium = DataLaboratorium::count();
         $dosenCount = DataDosen::count();
-        return view('home', compact ('dosenCount', 'laboratorium','jadwal','jadwalCount','jadwalDosen'));
+
+        if(auth()->user()->roles == 'dosen') {
+            $jadwalDosen = DataJadwal::where('dosen_id', auth()->user()->dosen->id)->get();
+            return view('home', compact ('dosenCount', 'laboratorium','jadwal','jadwalCount','jadwalDosen')); 
+        }
+       
+        return view('home', compact ('dosenCount', 'laboratorium','jadwal','jadwalCount'));
     }
 }
