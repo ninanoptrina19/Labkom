@@ -86,7 +86,6 @@ class JadwalController extends Controller
 
     ]);
 
-    // Ambil input dari form
     $input = $request->all();
 
     $conflictingSchedule = DataJadwal::where(function ($query) use ($input) {
@@ -99,7 +98,8 @@ class JadwalController extends Controller
                             $query->where('tanggal_mulai', '<=', $input['tanggal_mulai'])
                                   ->where('tanggal_selesai', '>=', $input['tanggal_selesai']);
                         });
-              });
+              })
+              ->where('jam', $input['jam']); 
     })->exists();
 
     if ($conflictingSchedule) {
@@ -157,7 +157,8 @@ class JadwalController extends Controller
                             $query->where('tanggal_mulai', '<=', $input['tanggal_mulai'])
                                   ->where('tanggal_selesai', '>=', $input['tanggal_selesai']);
                         });
-              });
+              })
+              ->where('jam', $input['jam']); 
     })->exists();
 
     if ($conflictingSchedule) {
