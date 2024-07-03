@@ -91,12 +91,12 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Dosen</th>
-                            <th scope="col">Prodi</th>
-                            <th scope="col">Penggunaan</th>
-                            <th scope="col">Laboratorium</th>
                             <th scope="col">Hari</th>
                             <th scope="col">Jam</th>
+                            <th scope="col">Laboratorium</th>
+                            <th scope="col">Penggunaan</th>
+                            <th scope="col">Dosen</th>
+                            <th scope="col">Prodi</th>
                             <th scope="col">tanggal mulai</th>
                             <th scope="col">tanggal selesai</th>
                             <th scope="col">Tahun Akademik</th>
@@ -105,12 +105,12 @@
                     <tbody>
                         @foreach ($jadwal as $jadwal)
                             <tr>
-                                <td>{{ $jadwal->dosen->nama }}</td>
-                                <td>{{ $jadwal->prodi }}</td>
-                                <td>{{ $jadwal->penggunaan }} </td>
-                                <td>{{ $jadwal->laboratorium->nama }}</td>
                                 <td>{{ $jadwal->hari }}</td>
                                 <td>{{ $jadwal->jam }}</td>
+                                <td>{{ $jadwal->laboratorium->nama }}</td>
+                                <td>{{ $jadwal->penggunaan }} </td>
+                                <td>{{ $jadwal->dosen->nama }}</td>
+                                <td>{{ $jadwal->prodi }}</td>
                                 <td>{{ $jadwal->tanggal_mulai }}</td>
                             <td>{{ $jadwal->tanggal_selesai }}</td>
                                 <td>{{ $jadwal->tahunAkademik->nama }}</td>
@@ -127,12 +127,12 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Dosen</th>
-                            <th scope="col">Prodi</th>
-                            <th scope="col">Penggunaan</th>
-                            <th scope="col">Laboratorium</th>
                             <th scope="col">Hari</th>
                             <th scope="col">Jam</th>
+                            <th scope="col">Laboratorium</th>
+                            <th scope="col">Penggunaan</th>
+                            <th scope="col">Dosen</th>
+                            <th scope="col">Prodi</th>
                             <th scope="col">tanggal mulai</th>
                             <th scope="col">tanggal selesai</th>
                             <th scope="col">Tahun Akademik</th>
@@ -141,12 +141,12 @@
                     <tbody>
                         @foreach ($jadwalDosen as $jadwal)
                             <tr>
+                                <td>{{ $jadwal->jam }}</td>
+                                <td>{{ $jadwal->hari }}</td>
+                                <td>{{ $jadwal->laboratorium->nama }}</td>
+                                <td>{{ $jadwal->penggunaan }} </td>
                                 <td>{{ $jadwal->dosen->nama }}</td>
                                 <td>{{ $jadwal->prodi }}</td>
-                                <td>{{ $jadwal->penggunaan }} </td>
-                                <td>{{ $jadwal->laboratorium->nama }}</td>
-                                <td>{{ $jadwal->hari }}</td>
-                                <td>{{ $jadwal->jam }}</td>
                                 <td>{{ $jadwal->tanggal_mulai }}</td>
                                 <td>{{ $jadwal->tanggal_selesai }}</td>
                                 <td>{{ $jadwal->tahunAkademik->nama }}</td>

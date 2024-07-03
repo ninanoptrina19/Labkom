@@ -28,32 +28,30 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Dosen</th>
-                <th>Prodi</th>
-                <th>Penggunaan/Mata kuliah</th>
-                <th>Laboratorium</th>
                 <th>Hari</th>
                 <th>Jam</th>
+                <th>Laboratorium</th>
+                <th>Penggunaan/Mata kuliah</th>
+                <th>Dosen</th>
+                <th>Prodi</th>
                 <th>Tanggal Mulai</th>
                 <th>Tanggal Selesai</th>
                 <th>Tahun Akademik</th>
-                <th>Keterangan</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($hasil as $data)
                 <tr>
                     <td>{{ $loop->iteration}}</td>
-                    <td>{{ $data->dosen->nama }}</td>
-                    <td>{{ $data->prodi }}</td>
-                    <td>{{ $data->penggunaan }}</td>
-                    <td>{{ $data->laboratorium->nama }}</td>
                     <td>{{ $data->hari }}</td>
                     <td>{{ $data->jam }}</td>
+                    <td>{{ $data->laboratorium->nama }}</td>
+                    <td>{{ $data->penggunaan }}</td>
+                    <td>{{ $data->dosen->nama }}</td>
+                    <td>{{ $data->prodi }}</td>
                     <td>{{ $data->tanggal_mulai }}</td>
                     <td>{{ $data->tanggal_selesai }}</td>
                     <td>{{ $data->tahunAkademik->nama }}</td>
-                    <td>{{ $data->keterangan }}</td>
                 </tr>
             @endforeach
         </tbody>
