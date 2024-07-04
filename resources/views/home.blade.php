@@ -94,12 +94,12 @@
                             <th scope="col">Hari</th>
                             <th scope="col">Jam</th>
                             <th scope="col">Laboratorium</th>
-                            <th scope="col">Penggunaan</th>
+                            <th scope="col">Penggunaan/Mata Kuliah</th>
                             <th scope="col">Dosen</th>
                             <th scope="col">Prodi</th>
+                            <th scope="col">Tahun Akademik</th>
                             <th scope="col">tanggal mulai</th>
                             <th scope="col">tanggal selesai</th>
-                            <th scope="col">Tahun Akademik</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -111,10 +111,9 @@
                                 <td>{{ $jadwal->penggunaan }} </td>
                                 <td>{{ $jadwal->dosen->nama }}</td>
                                 <td>{{ $jadwal->prodi }}</td>
+                                <td>{{ $jadwal->tahunAkademik->nama }}</td>
                                 <td>{{ $jadwal->tanggal_mulai }}</td>
                             <td>{{ $jadwal->tanggal_selesai }}</td>
-                                <td>{{ $jadwal->tahunAkademik->nama }}</td>
-                                <td>{{ $jadwal->angkatan }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -130,12 +129,12 @@
                             <th scope="col">Hari</th>
                             <th scope="col">Jam</th>
                             <th scope="col">Laboratorium</th>
-                            <th scope="col">Penggunaan</th>
+                            <th scope="col">Penggunaan/Mata Kuliah</th>
                             <th scope="col">Dosen</th>
                             <th scope="col">Prodi</th>
+                            <th scope="col">Tahun Akademik</th>
                             <th scope="col">tanggal mulai</th>
                             <th scope="col">tanggal selesai</th>
-                            <th scope="col">Tahun Akademik</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -147,9 +146,9 @@
                                 <td>{{ $jadwal->penggunaan }} </td>
                                 <td>{{ $jadwal->dosen->nama }}</td>
                                 <td>{{ $jadwal->prodi }}</td>
+                                <td>{{ $jadwal->tahunAkademik->nama }}</td>
                                 <td>{{ $jadwal->tanggal_mulai }}</td>
                                 <td>{{ $jadwal->tanggal_selesai }}</td>
-                                <td>{{ $jadwal->tahunAkademik->nama }}</td>
                             </tr>
                         @endforeach
                     </tbody>

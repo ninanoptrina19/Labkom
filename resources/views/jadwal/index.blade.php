@@ -16,7 +16,7 @@
                     @if (Auth::user()->roles == 'admin')
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="tahun_akademik" class="form-label">Filter berdasarkan Tahun Akademik:</label>
+                            <label for="tahun_akademik" class="form-label">Tahun Akademik:</label>
                             <select class="form-select" name="tahun_akademik_id" id="tahun_akademik" onchange="this.form.submit()">
                                 <option value="">Pilih Tahun Akademik</option>
                                 @foreach ($tahun_akademik as $item)
