@@ -51,13 +51,13 @@
             </div>
             <!-- Email input -->
             <div data-mdb-input-init class="form-outline mb-4">
-              <input type="email" id="form3Example3" class="form-control form-control-lg" placeholder="Enter a valid email address" name="email"/>
               <label class="form-label" for="form3Example3">Email address</label>
+              <input type="email" id="form3Example3" class="form-control form-control-lg" placeholder="Enter a valid email address" name="email"/>
             </div>
             <!-- Password input -->
             <div data-mdb-input-init class="form-outline mb-3">
-              <input type="password" id="form3Example4" class="form-control form-control-lg" placeholder="Enter password" name="password" />
               <label class="form-label" for="form3Example4">Password</label>
+              <input type="password" id="form3Example4" class="form-control form-control-lg" placeholder="Enter password" name="password" />
             </div>
             <div class="d-flex justify-content-between align-items-center">
             </div>

@@ -7,7 +7,7 @@
         <a href="{{ route('data_jadwal.create') }}" class="btn btn-primary mb-3">Tambah Jadwal</a>
 
         @if (Auth::user()->roles == 'admin')
-            <a href="{{ route('hasil.pdf', ['tahun_akademik' => request('tahun_akademik_id'), 'prodi' => request('prodi')]) }}" class="btn btn-primary float-end">Cetak PDF</a>
+            <a href="{{ route('hasil.pdf', ['tahun_akademik_id' => request('tahun_akademik_id'), 'prodi' => request('prodi')]) }}" class="btn btn-primary float-end">Cetak PDF</a>
         @endif
         
        
@@ -16,8 +16,8 @@
                     @if (Auth::user()->roles == 'admin')
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="tahun_akademik" class="form-label">Tahun Akademik:</label>
-                            <select class="form-select" name="tahun_akademik_id" id="tahun_akademik" onchange="this.form.submit()">
+                            <label for="tahun_akademik_id" class="form-label">Tahun Akademik:</label>
+                            <select class="form-select" name="tahun_akademik_id" id="tahun_akademik_id" onchange="this.form.submit()">
                                 <option value="">Pilih Tahun Akademik</option>
                                 @foreach ($tahun_akademik as $item)
                                     <option value="{{ $item->id }}" @if(request('tahun_akademik_id') == $item->id) selected @endif>{{ $item->nama }}</option>
