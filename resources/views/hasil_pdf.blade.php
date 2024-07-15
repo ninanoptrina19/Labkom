@@ -22,7 +22,7 @@
     </style>
 </head>
 <body>
-    <h1>Hasil Penjadwalan</h1>
+    <h1>Hasil Penjadwalan </h1>
 
     <table>
         <thead>

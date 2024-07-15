@@ -142,6 +142,7 @@
       <div class="card shadow border-o p-3">
         @if (count($jadwal) > 0)
         <div class="table-responsive">
+            <table class="table table-bordered">
             <table class="table">
                 <thead>
                     <tr>
@@ -151,8 +152,10 @@
                         <th scope="col">Penggunaan/Mata_Kuliah</th>
                         <th scope="col">Dosen</th>
                         <th scope="col">Prodi</th>
+                        <th scope="col">Tahun Akademik</th>
                         <th scope="col">Tanggal_Mulai</th>
                         <th scope="col">Tanggal_Selesai</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -164,6 +167,7 @@
                             <td>{{ $schedule->penggunaan }}</td>
                             <td>{{ $schedule->dosen->nama }}</td>
                             <td>{{ $schedule->prodi }}</td>
+                            <td>{{ $schedule->tahunAkademik->nama }}</td>
                             <td>{{ $schedule->tanggal_mulai }}</td>
                             <td>{{ $schedule->tanggal_selesai }}</td>
                            
