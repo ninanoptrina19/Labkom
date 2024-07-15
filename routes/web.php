@@ -7,6 +7,7 @@ use App\Http\Controllers\LaboratoriumController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\HasilController;
+use App\Http\Controllers\LandingpageController;
 use App\Http\Controllers\TahunAkademikController;
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +23,12 @@ use App\Http\Controllers\TahunAkademikController;
 
 // Route::get('/', [App\Http\Controllers\LandingpageController::class, 'index']);
 
-Route::get('/', function () {
+Route::get('/login', function () {
     return view('layouts.app');
 });
+
+
+Route::get('/', [LandingpageController::class, 'index'])->name('welcome.index');
 
 'Auth'::routes();
 
